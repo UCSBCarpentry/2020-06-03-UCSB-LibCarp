@@ -1,0 +1,31 @@
+country_id,country_sort_order,country
+1,1,"United States"
+2,3,Canada
+3,4,Belgium
+4,2,Mexico
+5,5,Columbia
+6,6,Germany
+7,7,Honduras
+8,8,"Hong Kong"
+9,9,Italy
+10,10,"Puerto Rico"
+11,11,Vietnam
+12,12,"British Virgin Islands"
+13,13,Bahamas
+14,14,Belize
+15,15,Guatemala
+16,16,Peru
+17,17,Zambia
+18,18,Jordan
+19,19,"West Bank (territory)"
+20,20,Ecuador
+21,21,Taiwan
+22,22,Indochina
+23,23,Brazil
+24,24,Japan
+25,25,Afghanistan
+26,26,Honduras
+27,27,"French Polynesia"
+28,28,China
+29,29,Venezuela
+30,30,Spain
