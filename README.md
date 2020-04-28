@@ -1,34 +1,35 @@
 [![Build Status](https://travis-ci.com/carpentries/workshop-template.svg?branch=gh-pages)](https://travis-ci.com/carpentries/workshop-template)
 
-# workshop-template
+# UCSB workshop-template
 
 This repository was created with The Carpentries' ([Software Carpentry][swc-site], [Data Carpentry][dc-site], and [Library Carpentry][lc-site]'s) template for creating websites for workshops.
 
-Please *do your work in your repository's `gh-pages` branch*,
+~~Please *do your work in your repository's `gh-pages` branch*,
 since that is what is
 [automatically published as a website by GitHub][github-project-pages].
 
 When we run this workshop, we'll have to clone it.
-Once we are done setting that up, please also [let us know][email] the workshop URL. If this is a self-organised workshop, you should also [fill in the self-organized workshop form][self-organized-workshop-form] (if you have not already done so), so we can keep track of all workshops. We build the list of workshops on our websites from the data included in your `index.md` page. We can only do that if you [customize][customization] that page correctly *and* let us know the workshop URL.
+Is this an *actual* Carpentry Workshop(tm)?
+If so, once we are done setting that up this workshop site, please also [let Carpentries know][email] the workshop URL. If this is a self-organised workshop, you should also [fill in the self-organized workshop form][self-organized-workshop-form] (if you have not already done so), so we can keep track of all workshops. We build the list of workshops on our websites from the data included in your `index.md` page. We can only do that if you [customize][customization] that page correctly *and* let us know the workshop URL.
 
 The pages on [customizing your website][customization],
 the [FAQ][faq],
 and the [design notes][design] have more detail on what we do and why.
 ## Customizing Your Website
 
-1.  Go into your newly-created repository,
+~~1.  Go into your newly-created repository,
     which will be at `https://github.com/your_username/YYYY-MM-DD-site`.
     For example,
     if your username is `gvwilson`,
     the repository's URL will be `https://github.com/gvwilson/2016-12-01-miskatonic`.
 
-3.  Ensure you are on the gh-pages branch by clicking on the branch under the drop 
+~~3.  Ensure you are on the gh-pages branch by clicking on the branch under the drop 
     down in the menu bar (see the note below):
 
     ![](fig/select-gh-pages-branch.png?raw=true)
 
 3.  Edit the header of `index.md` to customize the list of instructors,
-    workshop venue, etc. 
+    ~~workshop venue, etc. ~~
     You can do this in the browser by clicking on it in the file view on GitHub
     and then selecting the pencil icon in the menu bar:
 
