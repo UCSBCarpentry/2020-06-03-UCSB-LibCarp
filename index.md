@@ -1,7 +1,7 @@
 ---
 layout: workshop      # DON'T CHANGE THIS.
-venue: "UCSB Library"        # brief name of host site without address (e.g., "Euphoric State University")
-address: "525 U-Cen Rd"      # full street address of workshop (e.g., "Room A, 123 Forth Street, Blimingen, Euphoria")
+venue: "Online"        # brief name of host site without address (e.g., "Euphoric State University")
+address: "Zoom"      # full street address of workshop (e.g., "Room A, 123 Forth Street, Blimingen, Euphoria")
 country: "us"      # lowercase two-letter ISO country code such as "fr" (see https://en.wikipedia.org/wiki/ISO_3166-1#Current_codes)
 language: "en"     # lowercase two-letter ISO language code such as "fr" (see https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes)
 latitude: "34.414398"     # decimal latitude of workshop venue (use https://www.latlong.net/)
