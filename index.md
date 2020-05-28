@@ -14,7 +14,7 @@ instructor: ["Jon Jablonski", "Greg Janee"] # boxed, comma-separated list of ins
 helper: ["Kristi Liu", "Torin White"]     # boxed, comma-separated list of helpers' names, like ["Marlyn Wescoff", "Fran Bilas", "Ruth Lichterman"]
 email: ["collaboratory@library.ucsb.edu"]    # boxed, comma-separated list of contact email addresses for the host, lead instructor, or whoever else is handling questions, like ["marlyn.wescoff@example.org", "fran.bilas@example.org", "ruth.lichterman@example.org"]
 collaborative_notes:             # optional: URL for the workshop collaborative notes, e.g. an Etherpad or Google Docs document (e.g., https://pad.carpentries.org/2015-01-01-euphoria)
-eventbrite: "103867743216"          # optional: alphanumeric key for Eventbrite registration, e.g., "1234567890AB" (if Eventbrite is being used)
+eventbrite:          # optional: alphanumeric key for Eventbrite registration, e.g., "1234567890AB" (if Eventbrite is being used)
 ---
 
 {% comment %} See instructions in the comments below for how to edit specific sections of this workshop template. {% endcomment %}
@@ -59,6 +59,9 @@ displayed if the 'eventbrite' field in the header is not set.
 </iframe>
 {% endif %}
 
+<h2 id="general">*Registration*</h2>
+<p> Registration & waitlist is at capacity for this event. Please subscribe to <a href="https://groups.google.com/a/library.ucsb.edu/forum/#!forum/carpentry">UCSB Carpentry workshops list-serve</a> to be alerted when new workshops are published. We plan holding online workshops throughout the summer quarter. They will be sent to the list serve and posted on <a href="https://ucsbcarpentry.github.io/">https://ucsbcarpentry.github.io/</a> as soon as the events are published.
+</p>
 
 <h2 id="general">General Information</h2>
 
