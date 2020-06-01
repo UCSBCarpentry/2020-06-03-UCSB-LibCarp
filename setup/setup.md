@@ -13,20 +13,20 @@ For the first half of the lesson, we will use a Chrome browser extension to get 
 1. Please ensure you have a working copy of the [Chrome browser](https://www.google.com/intl/en/chrome/browser/).
 2. Using Chrome, download and enable the [Scraper extension](https://chrome.google.com/webstore/detail/scraper/mbigbapnjcgaffohmbkdlecaccepngjd).
 
-## Part two: Write Python programs to automatically scrape data
+## Part two: Write small Python programs to automatically scrape data
 
-### Shell and Python
+### Python
 The second part of the lesson requires the Python programming language and access to a command-line 
-interface (shell) on your computer. Please refer to [the Software Carpentry setup 
-instructions](http://UCSBCarpentry.github.io/2020-06-03-UCSB-LibCarp/_includes/swc/setup.html) for 
+interface (shell) on your computer. Please refer back to [the workshop's setup 
+instructions for *Python*](/2020-06-03-UCSBLibCarp/setup/setup.html) for 
 *Python* if you need guidance.
 
-> ## Prerequisites
-> This part of the lesson requires some prior knowledge of Python and how to use a shell.
-> If you need help getting started on those topics, we suggest going through the following
-> lessons first (during a workshop or on your own):
+> ## Preparing for the workshop
+> In this part of the lesson, we will apply 
+> our new shell skills.
+> If you want to learn more about the basics of python, work your way through 
+> a Python carpentry lesson:
 >
-> * [The Unix Shell](http://swcarpentry.github.io/shell-novice/)
 > * [Programming with Python](http://swcarpentry.github.io/python-novice-inflammation/)
 >
 {: .prereq}
@@ -35,8 +35,8 @@ instructions](http://UCSBCarpentry.github.io/2020-06-03-UCSB-LibCarp/_includes/s
 
 Once you have a working installation of Python, the next step is to install [Scrapy](https://scrapy.org/).
 
-If you have installed Python using the Anaconda framework as suggested by the Software Carpentry setup instructions,
-you can easilly install Scrapy by doing the following:
+If you have installed Python using the Anaconda framework as suggested on the workshop homepage
+setup instructions, you can easilly install Scrapy by doing the following:
 
 1. Open a new shell (e.g. Terminal on Mac, or the Anaconda command-line tool on Windows)
 2. Type the following:
