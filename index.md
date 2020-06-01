@@ -132,8 +132,10 @@ Modify the block below if there are any special requirements.
 {% endcomment %}
 <p id="requirements">
   <strong>Requirements:</strong> Participants must bring a laptop with a
-  Mac, Linux, or Windows operating system (not a tablet, Chromebook, etc.) that they have administrative privileges on. They should have a few specific software packages installed (listed <a href="#setup">below</a>).
-</p>
+  Mac, Linux, or Windows operating system (not a tablet, Chromebook, 
+etc.) that they have administrative privileges on. They should have a 
+few specific software packages installed (listed <a 
+href="#setup">below</a>). </p>
 
 {% comment %}
 ACCESSIBILITY
@@ -307,7 +309,8 @@ please preview your site before committing, and make sure to run
   {% endif %}
   workshop,
   you will need access to the software described below.
-  In addition, you will need an up-to-date web browser.
+  In addition, you will need an up-to-date version of the 
+<a href="https://www.google.com/chrome/">Chrome web browser</a>.
 </p>
 <p>
   We maintain a list of common issues that occur during installation as a reference for instructors
