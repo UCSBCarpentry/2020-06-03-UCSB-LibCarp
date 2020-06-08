@@ -18,258 +18,265 @@ keypoints:
 
 # Using the Scraper Chrome extension
 
-Now we are finally ready to do some web scraping. Let's go back to the list of
-[UK House of Commons members](https://www.parliament.uk/mps-lords-and-offices/mps/). 
+Now we are finally ready to do some web scraping. For this lesson, we will be using two UCSB department webpages: East Asian Languages and Cultural Studies and Jewish Studies. We are interested in scrapping contact information from faculty within these departments with the help of Xpath and Scraper. To do so, we will use the Scraper extension in the Chrome browser (refer to the [Setup](FIXME) section for help installing these tools).
+First, let's focus our attention on the East Asian Languages and Cultural Studies webpage [https://www.eastasian.ucsb.edu/people/faculty/](https://www.eastasian.ucsb.edu/people/faculty/). 
 
-We are interested in downloading this list to a spreadsheet, with columns for names and
-constituencies. Do do so, we will use the Scraper extension in the Chrome browser
-(refer to the [Setup](/2020-06-03-UCSB-LibCarp/setup/) section for help installing these tools).
+We are interested in downloading the list of faculty names and their email addresses.
+![East Asian Studies website]({{ page.root }}/fig/Image1.png)
+	
+## Scrape similar 
+With the extension installed, we can select the first row in the faculty list, do a right-click and choose "Scrape similar" from the contextual menu. 
 
-## Scrape similar
-
-With the extension installed, we can select the first row of the House of Commons members
-list, do a right click and choose "Scrape similar" from the contextual menu:
-
-![Screenshot of the Scraper contextual menu]({{ page.root }}/fig/scraper-contextmenu.png)
-
-Alternatively, the "Scrape similar" option can also be accessed from the Scraper extension
-icon:
-
-![Screenshot of the Scraper menu]({{ page.root }}/fig/scraper-menu.png)
-
+![East Asian Studies website/scrape]({{ page.root }}/fig/Image2.png)
+ 
+You can select the picture as well. Make sure you do not right-click on a hyperlinked text. 
+Alternatively, the "Scrape similar" option can also be accessed from the Scraper extension icon:
+ 
+![Scraper Web Browser]({{ page.root }}/fig/Image3.png)
+ 
 Either operation will bring up the Scraper window:
 
-![Screenshot of the Scraper main window]({{ page.root }}/fig/scraper-ukparl-01.png)
+![Scraper web browser with red and blue boxes]({{ page.root }}/fig/Image4.png)
+ 
+We can notice that Scraper has generated XPath queries that correspond to the data we had selected upon calling it. The Selector (highlighted in blue in the above screenshot) has been set to `//tr[td]` which selects all the rows of the table, delimiting the data we want to extract.
+In fact, we can try out that query using the technique that we learned in the previous section by typing the following in the browser console:
 
-We recognize that Scraper has generated XPath queries that corresponds to the data we had
-selected upon calling it. The Selector (highlighted in red in the above screenshot)
- has been set to `//tbody/tr[td]` which selects
-all the rows of the table, delimiting the data we want to extract.
-
-In fact, we can try out that query using the technique that we learned in the previous
-section by typing the following in the browser console:
+> ## #Tip: Use the following shortcuts to Open Console Panel:
+>
+> **Mac:** (Command+Option+J)
+>
+> **Windows/Linux:** (Control+Shift+J). 
+>
+>Remember: ```<tr>``` defines a row in a table and ```<td>``` defines a cell is a table
+{: .callout}
 
 ~~~
-$x("//tbody/tr[td]")
+$x("//tr[td]")
 ~~~
 {: .source}
 
-returns something like
-
+The above query will return something like:
 ~~~
-<- Array [672]
+<- (48)
 ~~~
 {: .output}
 
-which we can explore in the console to make sure this is the right data.
+Which we can explore in the console and check for highlights to make sure this is the right data.
 
-Scraper also recognized that there were two columns in that table, and has accordingly
-created two such columns (highlighted in blue in the screenshot), 
-each with its own XPath selector, `*[1]` and `*[2]`.
+Could you guess why we got 48 as a result?
 
-To understand what this means, we have to remember that XPath queries are relative to the
-current context node. The context node has been set by the Selector query above, so
-those queries are relative to the array of `tr` elements that has been selected.
+There are 24 rows with faculty profiles, but in between them we had tr box shadows, if we unselect "Exclude empty results" which is set by default, we will get empty rows in our output. So it is wise to keep this option always selected.
 
-We can replicate their effect by trying out 
+Scraper also recognized that there were four columns in that table, and has accordingly created four such columns (highlighted in red in the screenshot), each with its own XPath selector, ```*[1]```, ```*[2]```, ```*[3]``` and ```*[4]```.
 
+To understand what this means, we have to remember that XPath queries are relative to the current context node. The context node has been set by the Selector query above, so those queries are relative to the array of tr elements that have been selected.
+
+We can replicate their effect by trying out the following expression in the console:
 ~~~
-$x("//tbody/tr[td]/*[1]")
+$x("//tr[td]/*[4]")
 ~~~
 {: .source}
 
-in the console. This should select only the first column of the table. The same goes for the
-second column.
+This should select only the first column of the table. The same goes for the second column.
 
-But in this case, we don't need to fiddle with the XPath queries too much, as Scraper was able to deduce
-them for us, and we can use the export functions to either create a Google Spreadsheet with the
-results, or copy them into the clipboard in Tab Separated Values (TSV) format for pasting into
-a text document, a spreadsheet or Open Refine.
+But in this case, we don't need to fiddle with the XPath queries too much, as Scraper was able to deduce them for us, and we can copy them into the clipboard in Tab Separated Values (TSV) format for pasting into a text document or a spreadsheet.
 
-There is one bit of data cleanup we might want to do, though. If we paste the data copied from Scraper
-into a text document, we see something like this:
+There is a bit of data cleaning we might want to do prior to that, though. 
 
-~~~
-Name	Constituency
-A	back to top
-                                 Abbott, Ms Diane                                 (Labour)                             	Hackney North and Stoke Newington
-                                 Abrahams, Debbie                                 (Labour)                             	Oldham East and Saddleworth
-~~~
-{: .output}
-
-This is because there are a lot of unnecessary white spaces in the HTML that's behind that table, which
-are being captured by Scraper. We can however tweak the XPath column selectors to take advantage of the
-`normalize-space` XPath function:
-
-~~~
-normalize-space(*[1])
-normalize-space(*[2])
-~~~
-
-![Screenshot of the Scraper window showing the Column selectors]({{ page.root }}/fig/scraper-ukparl-02.png)
-
-We now need to tell Scraper to scrape the data again by using our new selectors, this is done by clicking
-on the "Scrape" button. The preview will not noticeably change, but if we now copy again the results
-and paste them in our text editor, we should see
-
-~~~
-Name	Constituency
-A	back to top
-Abbott, Ms Diane (Labour)	Hackney North and Stoke Newington
-Abrahams, Debbie (Labour)	Oldham East and Saddleworth
-Adams, Nigel (Conservative)	Selby and Ainsty
-~~~
-{: .output}
-
-which is a bit cleaner.
-
-> ## Scrape the list of Ontario MPPs
-> Use Scraper to export the list of [current members of the Ontario Legislative Assembly](https://www.ola.org/en/members/current)
-> and try exporting the results in your favourite spreadsheet or data analysis
-> software.
->
-> Once you have done that, try adding a third column containing the URLs that are underneath
-> the names of the MPPs and that are leading to the detail page for each parliamentarian.
->
-> Tips:
-> 
-> * To add another column in Scraper, use the little green "+" icon in the columns list.
-> * Look at the source code and try out XPath queries in the console until you find what
->   you are looking for.
-> * The syntax to select the value of an attribute of the type `<element attribute="value">`
->   is `element/@attribute`.
-> * The `concat()` XPath function can be use to concatenate things.
->
-> > ## Solution
-> > 
-> > Add a third column with the XPath query
-> > 
-> > ~~~
-> > *[1]/a/@href
-> > ~~~
-> > {: .source}
-> >
-> > ![Screenshot of the Scraper window on the Ontario MPP page]({{ page.root }}/fig/scraper-ontparl-01.png)
-> > 
-> > This extracts the URLs, but as luck would have it, those URLs are relative to the list
-> > page (i.e. they are missing `https://www.ola.org/en/members/current`). We can use the
-> > `concat()` XPath function to construct the full URLs:
-> >
-> > ~~~
-> > concat('https://www.ola.org',*[1]/a/@href)
-> > ~~~
-> > {: .source}
-> >
-> > ![Screenshot of the Scraper window on the Ontario MPP page]({{ page.root }}/fig/scraper-ontparl-02.png)
-> >
-> {: .solution}
-{: .challenge}
-
-
+1. The first column is empty because we have selected the photo and scraper recognizes that as an element, however, images are not included in the scrapping process, so we can remove it using the red (-) icon and click on scrape to see the change. Let's do the same thing with column three because we are not interested in their positions or specialties now.
+1. We also want to rename the other columns remaining accordingly, so let's change them to Faculty_name and Contact_info.
 
 ## Custom XPath queries
+Sometimes, however, we do have to do a bit of work to get Scraper to select the data elements that we are interested in.
 
-Sometimes, however, we do have to do a bit of work to get Scraper to select the data elements
-that we are interested in.
+Note that we still have other info such as office location and times along with emails. So what if we want to get a column only with emails instead? We should add a new column and rename it as Email and use Xpath to help us to refine that. To add another column in Scraper, use the little green "+" icon in the columns list. 
 
-Going back to the example of the Canadian Parliament we saw in the introduction,
-there is a page on the same website that [lists the mailing addresses](http://www.ourcommons.ca/Parliamentarians/en/members/addresses) of all
-parliamentarians. We are interested in scraping those addresses.
+Let's inspect the link to identify on the developer's console the exact path for the email addresses. Select the email > right-click (make sure to not click in the email) > Inspect. Then, hover the mouse over the email > right-click > copy > copy Xpath. Note that there will be an option to copy the Full path but you do not need that as we have already scrapped from a portion of the website.
 
-If we select the addresses for the first MP and try the "Scrape similar" function...
+> ## Tip:
+> You can copy the path to a notepad, it will help you to compare it with scrap and understand better 
+> where the element you are interested in is located. 
+> You should have the path bellow or something slightly different if you have selected other faculty 
+> email as the <tr> [row number] will represent the data you have selected:
+>> ~~~
+>> //*[@id="site-main"]/div/div/div[2]/div/table/tbody/tr[1]/td[4]/a 
+>> ~~~
+> {: .source}
+{: .callout}
+ 
+ 
+> ## Challenge: Scrape Emails
+> Which path would you have to provide to Scraper to get the emails in one column?
+>
+>> ## Solution
+>>You should get a column with emails with the following path expression after hitting scrape
+>>~~~
+>>./td[4]/a
+>>~~~
+>>{: .output}
+>> Note that Scraper gave you a starting path based on what you have scraped `//tr[td]`, so you have 
+>> only to add the continuation of it. In order to tell Scraper extension we are only interested in the 
+>> emails, we will have to indicate the data that is in the fourth column and add the specific path to 
+>> the email address. Don't forget the dot (.) in the beginning of the Xpath expression. As we have 
+>> learned in the previous lesson that is how you tell the path is in the current context node.
+>>
+>> You can remove the contact row now and copy the output to the clipboard. 
+> {: .solution}
+{: .challenge} 
 
-![Screenshot of the Scraper context menu being used on an address block]({{ page.root }}/fig/scraper-canparl-01.png)
+## Let's scrape a different site
 
-Scraper produces this:
 
-![Screenshot of the Scraper window trying to scrape addresses]({{ page.root }}/fig/scraper-canparl-02.png)
+Now let's turn to the Jewish Studies faculty webpage [www.jewishstudies.ucsb.edu/people](https://www.jewishstudies.ucsb.edu/people) for practicing XPath queries a little bit more.
 
-which does a nice job separating the address elements, but what if instead we want a table of
-the addresses of all MPs? Selecting multiple addresses instead does not help. Remember what we said
-about computers not being smart about structuring information? This is a good example. We humans
-know what the different blocks of texts on the screen mean, but the computer will need some help from
-us to make sense of it.
+Note that the profiles on the Jewish Studies facultly page are laid out differently that the East Asian Studies faculty page. On the Jewish Studies page the information is not displayed in well-defined rows. So, when we scrape the web page data, we should get one row per faculty with one string of data.
 
-We need to tell Scraper what exactly to scrape, using XPath.
 
-If we look at the HTML source code of that page, we see that individual MPs are all within `ul`
-elements:
+
+![Jewish Studies website]({{ page.root }}/fig/Image5.png)
+![Scraper Jewish studies]({{ page.root }}/fig/Image6.png)
+
+If we want to have this data in a more reusable format, we will have to create columns indicating the exact path we want to scrape the data from, considering that these paths will be a continuation of the one highlighted in the image above. 
+
+For this particular case, we want to have four columns: 
+
+| 1. Name | 2. Email | 3. Position| 4. Office Location. |
+
+Using the function to inspect where the element is located on the webpage, identify the correct paths, and scrape the information we need. 
+
+For the first column __"Name"__ we will have to inspect where the name is located to get the right path to it. 
+
+Select one of the Faculty names > right-click > inspect. It will open the developer window as indicated below:
+
+
+![Jewish Studies with developer window]({{ page.root }}/fig/Image7.png)
+
+In the developer tools window select the  html element containing the faculty name, right-click, then choose Copy Xpath. 
+ 
+You should get this path: 
 
 ~~~
-(...)
-<ul>
-   <li><h3>Aboultaif, Ziad</h3></li>
-   <li>
-      <span class="addresstype">Hill Office</span>
-      <span>Telephone:</span>
-      <span>613-992-0946</span>
-      <span>Fax:</span>            
-      <span>613-992-0973</span>
-   </li>
-   <li>
-         <ul>       
-            <li><span class="addresstype">Constituency Office(s)</span></li>
-            <li>                            
-               <span>8119 - 160 Avenue (Main Office)</span>
-               <span>Suite 204A</span>
-               <span>Edmonton, Alberta</span>
-               <span>T5Z 0G3</span>
-               <span>Telephone:</span> <span>780-822-1540</span>
-               <span>Fax:</span> <span>780-822-1544</span>                                    
-               <span class="spacer"></span>
-            </li>                         
-      </ul>
-   </li>                                   
-</ul>   
-(...)
+//*[@id="block-system-main"]/div/div/div/div/section[1]/div/div/div/div/div[1]/div[1]/span 
 ~~~
 {: .output}
 
-So let's try changing the Selector XPath in Scraper to
 
-~~~
-//body/div[1]/div/ul
-~~~
-{: .source}
 
-and hit "Scrape". We get something that is closer to what we want, with one line per MP, but
-the addresses are still all in one block of unstructured text:
-
-![Screenshot of the Scraper window trying to scrape addresses]({{ page.root }}/fig/scraper-canparl-03.png)
-
-Looking closer at the HTML source, we see that name and addresses are separated by `li` elements
-within those `ul` elements. So let's add a few columns based on those elements:
-
-~~~
-./li[1] -> Name
-./li[2] -> Hill Office
-./li[3] -> Constituency
-~~~
-{: .source}
-
-This produces the following result:
-
-![Screenshot of the Scraper window scraping addresses]({{ page.root }}/fig/scraper-canparl-04.png)
-
-The addresses are still one big block of text each, but at least we now have a table for all MPs
-and the addresses are separated.
-
-> ## Scrape the Canadian MPs' phone numbers
-> Keep working on the example above to add a column for the Hill Office phone number
-> and fax number for each MP.
+> ## Note 
 >
+> You only have to specify in the expression things that are not included in the original XPath automatically created by Scraper. 
+> Compare the two and see how we can express the path to Scraper. 
+>
+> {: .source}
+{: .callout}
+
+
+
+
+> ## Challenge: Why do both these Xpaths work?
+> Question:  In this case, either of the following paths would work. Do you know why?: 
+> 
+> ```
+> ./div[1]/span
+> ./div/span
+> ```
+>
+> Alternatively, you can also get it right if you use:
+>
+> ~~~
+> ./div/span/a 
+> ./div[1]/span/a
+> ~~~
+>
+>
+> > ## solution
+> > In the first case telling that the element in the first node of that particular div is consistent throughout other names on the website. Omitting it won't change the outcome, as you are describing that you are interested in the content of that div child node. 
+> > If you provide the path with the extra `/a` you are telling Scraper to get the information that is in another child node, which happens to also include the faculty name, linking it to a bio webpage. Again, including `[1]` or not does not change the outcome. 
+> >
+> >![Jewish Studies Scraper with 4 paths leading to the same result]({{ page.root }}/fig/Image8.png)
+> {: .solution}
+{: .challenge}
+
+
+> ## Challenge: Scrape Three Columns
+>
+> Now that you have learned how to get the right path to create columns for names, follow the same steps to get the three other columns Emails, Position, and Office Location.
+>
+>
+>
+> After completing all steps you should get the following output:
+>
+> ![Screenshot of the Scraper]({{ page.root }}/fig/Image9.png)
 >
 > > ## Solution
 > > 
-> > Add columns with the XPath query
-> > 
 > > ~~~
-> > ./li[2]/span[3] -> Hill Office Phone
-> > ./li[2]/span[5] -> Hill Office Fax
+> > ./div[4]/div[1]/div/a (Email)
+> > ./div[2]/div[2]/div/d (Position)
+> > ./div[4]/div[3]/div/d (Office)
 > > ~~~
-> > {: .source}
-> >
-> > ![Screenshot of the Scraper window on scraping MP phone numbers]({{ page.root }}/fig/scraper-canparl-05.png)
-> >
 > {: .solution}
 {: .challenge}
+
+
+
+## Concat Function
+ 
+
+
+Let's look at another XPath function called concat() that can be used to concatenate things, which basically joins two or more strings into one. If we want to scrape the names along the bio web pages for all faculty we can take the following steps:
+
+
+![Scrapping bio pages with names]({{ page.root }}/fig/Image10.png)
+
+
+This extracts the URLs, but as luck would have it, those URLs are relative to the list page (i.e. they are missing `https://www.jewishstudies.ucsb.edu`). 
+
+
+
+
+![Image 11 Scrape Results with incomplete URLs]({{ page.root }}/fig/Image11.png)
+
+
+
+We can create a new column and use the concat() XPath function to construct the full URLs to faculty bio pages, using the following expression:
+
+
+
+
+`concat('https://www.jewishstudies.ucsb.edu',@href)`
+
+
+Note that the XPath expression basically tells Scraper what should be placed before `@href`
+
+
+> ## Challenge: Applying `concat` function
+>
+>
+> Let's say you want to add automatically include `Dr.` before all faculty names, how would you do that using the `concat()` XPath function
+> 
+> > ## Solution
+> >
+> > `concat('Dr. ', .)`
+> >
+> >
+> > If you rename and reorder columns you should have this final output
+> >
+> > ![Concat Output Challenge]({{ page.root }}/fig/Image11.png)
+> {: .solution}
+{: .challenge}
+
+ 
+#### Other free Chrome extensions to scrape data from websites:
+ 
+[Web Scraper](https://chrome.google.com/webstore/detail/web-scraper/jnhgnonknehpejjnehehllkliplmbmhn?hl=en)
+
+
+[Simple Scraper](https://chrome.google.com/webstore/detail/simple-scraper-%E2%81%A0%E2%80%94-scrape/lnddbhdmiciimpkbilgpklcglkdegdkg)
+
+
+[Grepsr](https://chrome.google.com/webstore/detail/grepsr-web-scraping-tool/hjdijkhlfpeafghibmiabeofkiicdnjm)
+
+
+[Grabbly](https://chrome.google.com/webstore/detail/grabbly/acmmehmidcnncgbigblfkgmbmeijgefl?hl=en)
+
