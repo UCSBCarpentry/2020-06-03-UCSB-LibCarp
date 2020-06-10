@@ -79,7 +79,7 @@ $x("//tr[td]/*[4]")
 
 This should select only the fourth column of the table. 
 
-But in this case, we don't need to fiddle with the XPath queries too much, as Scraper was able to deduce them for us, and we can copy them into the clipboard in Tab Separated Values (TSV) format for pasting into a text document or a spreadsheet.
+But in this case, we don't need to fiddle with the XPath queries too much, as Scraper was able to deduce them for us, and we can copy the data output to the clipboard and past it into a text document or a spreadsheet.
 
 There is a bit of data cleaning we might want to do prior to that, though. 
 
@@ -120,7 +120,7 @@ Let's inspect the link to identify on the developer's console the exact path for
 >> the email address. Don't forget the dot (.) in the beginning of the Xpath expression. As we have 
 >> learned in the previous lesson that is how you tell the path is in the current context node.
 >>
->> You can remove the contact row now and copy the output to the clipboard. 
+>> You can remove the contact column now and copy the output to the clipboard. 
 > {: .solution}
 {: .challenge} 
 
