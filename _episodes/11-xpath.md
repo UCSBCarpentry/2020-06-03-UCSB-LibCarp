@@ -596,4 +596,5 @@ $x("//h2[@id='navigating-through-the-html-node-tree-using-xpath']/following-sibl
 # References
 
 * [W3Schools: JavaScript HTML DOM Navigation](http://www.w3schools.com/js/js_htmldom_navigation.asp)
-* [XPath Cheatsheet](http://labs.timtom.ch/library-webscraping/extras/xpath-cheatsheet.md.pdf)
+* [XPath Cheatsheet](https://devhints.io/xpath)
+* [Another XPath Cheatsheet](http://labs.timtom.ch/library-webscraping/extras/xpath-cheatsheet.md.pdf)
