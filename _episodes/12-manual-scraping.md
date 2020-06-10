@@ -83,7 +83,7 @@ But in this case, we don't need to fiddle with the XPath queries too much, as Sc
 
 There is a bit of data cleaning we might want to do prior to that, though. 
 
-1. The first column is empty because we have selected the photo and scraper recognizes that as an element, however, images are not included in the scraping process, so we can remove it using the red (-) icon and click on scrape to see the change. Let's do the same thing with column three because we are not interested in their positions or specialties now.
+1. The first column is empty because we have selected the photo and scraper recognizes that as an element, however, images are not included in the scraping process, so we can remove it using the red (-) icon and click on scrape to see the change. Let's do the same thing with column three because we are not interested in getting their positions and specialties for this example.
 1. We also want to rename the other columns remaining accordingly, so let's change them to Faculty_name and Contact_info.
 
 ## Custom XPath queries
