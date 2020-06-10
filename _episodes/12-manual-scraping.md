@@ -77,7 +77,7 @@ $x("//tr[td]/*[4]")
 ~~~
 {: .source}
 
-This should select only the fourth column of the table. The same goes for the second column.
+This should select only the fourth column of the table. 
 
 But in this case, we don't need to fiddle with the XPath queries too much, as Scraper was able to deduce them for us, and we can copy them into the clipboard in Tab Separated Values (TSV) format for pasting into a text document or a spreadsheet.
 
