@@ -127,7 +127,7 @@ Let's inspect the link to identify on the developer's console the exact path for
 ## Let's scrape a different website
 
 
-Now let's turn to the Jewish Studies webpage [www.jewishstudies.ucsb.edu/people](https://www.jewishstudies.ucsb.edu/people) for practicing XPath queries a little bit more.
+Now let's turn to the Jewish Studies webpage <a target="_blank" href="https://www.jewishstudies.ucsb.edu/people">www.jewishstudies.ucsb.edu/people</a> for practicing XPath queries a little bit more.
 
 Note that the profiles on this webpage are laid out differently from the first example. Here, the information is not displayed in well-defined rows and columns. So, when we scrape the webpage, we should get one row per faculty with only one string of data.
 
