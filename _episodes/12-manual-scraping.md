@@ -190,8 +190,7 @@ You should get this path:
 >
 >
 > > ## solution
-> > In the first solution we have the div specified according to the selection we scraped. Note that div[2], div[3] represents the following faculty. Omitting it won't change the outcome, as you are describing that you are interested in the content of that div block as a child node. The span tag indicates the inline text of a document. 
-> > If you provide the extra `/a` (which is the anchor element) you are telling Scraper to get the information that is in another child node, which happens to also include the faculty name, linking it to a bio webpage, but without the hiperlink (href), is only text. Again, including `[1]` or not does not change the outcome. 
+> > The span tag indicates the inline text of a document. If you provide the extra `/a` (which is the anchor element) you are telling Scraper to get the information that is in another child node, which happens to also include the faculty name, linking it to a bio webpage, but without the hyperlink (href) attribute, we will only get the text. Including `[1]` or not does not change the outcome because there is only one division class within the division block-level for each of the faculty profiles.  
 > >
 > >![Jewish Studies Scraper with 4 paths leading to the same result]({{ page.root }}/fig/Image8.png)
 > {: .solution}
