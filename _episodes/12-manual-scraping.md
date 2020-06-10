@@ -67,7 +67,7 @@ Could you guess why we got 48 as a result?
 
 There are 24 rows with faculty profiles, but in between them we had tr box shadows, if we unselect "Exclude empty results" which is set by default, we will get empty rows in our output. So it is wise to keep this option always selected.
 
-Scraper also recognized that there were four columns in that table, and has accordingly created four such columns (highlighted in red in the screenshot), each with its own XPath selector, ```*[1]```, ```*[2]```, ```*[3]``` and ```*[4]```.
+Scraper also recognized that there were four columns in that table, and has accordingly created such columns (highlighted in red in the screenshot), each with its own XPath selector, ```*[1]```, ```*[2]```, ```*[3]``` and ```*[4]```.
 
 To understand what this means, we have to remember that XPath queries are relative to the current context node. The context node has been set by the Selector query above, so those queries are relative to the array of tr elements that have been selected.
 
@@ -127,9 +127,9 @@ Let's inspect the link to identify on the developer's console the exact path for
 ## Let's scrape a different website
 
 
-Now let's turn to the Jewish Studies faculty webpage [www.jewishstudies.ucsb.edu/people](https://www.jewishstudies.ucsb.edu/people) for practicing XPath queries a little bit more.
+Now let's turn to the Jewish Studies webpage [www.jewishstudies.ucsb.edu/people](https://www.jewishstudies.ucsb.edu/people) for practicing XPath queries a little bit more.
 
-Note that the profiles on the Jewish Studies facultly page are laid out differently from the East Asian Studies faculty page. On the Jewish Studies page the information is not displayed in well-defined rows and columns. So, when we scrape the webpage, we should get one row per faculty with one string of data.
+Note that the profiles on this webpage are laid out differently from the first example. Here, the information is not displayed in well-defined rows and columns. So, when we scrape the webpage, we should get one row per faculty with only one string of data.
 
 
 
@@ -223,7 +223,7 @@ You should get this path:
  
 
 
-Let's look at another XPath function called concat() that can be used to concatenate things, which basically joins two or more strings into one. If we want to scrape the names along the bio web pages for all faculty we can take the following steps:
+Let's look at another XPath function called concat() that can be used to concatenate things. This function basically joins two or more strings into one. If we want to scrape the names along the bio web pages for all faculty we can take the following steps:
 
 
 ![Scraping bio pages with names]({{ page.root }}/fig/Image10.png)
