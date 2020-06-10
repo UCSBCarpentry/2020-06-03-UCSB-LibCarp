@@ -129,7 +129,7 @@ Let's inspect the link to identify on the developer's console the exact path for
 
 Now let's turn to the Jewish Studies faculty webpage [www.jewishstudies.ucsb.edu/people](https://www.jewishstudies.ucsb.edu/people) for practicing XPath queries a little bit more.
 
-Note that the profiles on the Jewish Studies facultly page are laid out differently from the East Asian Studies faculty page. On the Jewish Studies page the information is not displayed in well-defined rows and columns. So, when we scrape the web page data, we should get one row per faculty with one string of data.
+Note that the profiles on the Jewish Studies facultly page are laid out differently from the East Asian Studies faculty page. On the Jewish Studies page the information is not displayed in well-defined rows and columns. So, when we scrape the webpage, we should get one row per faculty with one string of data.
 
 
 
