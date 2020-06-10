@@ -190,7 +190,7 @@ You should get this path:
 >
 >
 > > ## solution
-> > The span tag indicates the inline text of a document. If you provide the extra `/a` (anchor element) you are telling Scraper to get the information that is in another child node, which happens to also include the faculty name, linking it to a bio webpage, but without the hyperlink (href) attribute, we will only get the text. Including `[1]` or not does not change the outcome because there is only one division class within the division block-level for each of the faculty profiles.  
+> > The `/span` indicates the inline text of a document. If you provide the extra `/a` (anchor element) you are telling Scraper to get the information that is in another child node, which happens to also include the faculty name as an anchor to the the faculty biopage. Including `[1]` or not does not change the outcome because there is only one division class within the division block-level for each of the faculty profiles.  
 > >
 > >![Jewish Studies Scraper with 4 paths leading to the same result]({{ page.root }}/fig/Image8.png)
 > {: .solution}
