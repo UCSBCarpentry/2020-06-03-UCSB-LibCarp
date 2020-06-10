@@ -189,7 +189,7 @@ You should get this path:
 > ~~~
 >
 >
-> > ## solution
+> > ## Solution
 > > The `/span` indicates the inline text of a document. If you provide the extra `/a` (anchor element) you are telling Scraper to get the information that is in another child node, which happens to also include the faculty name as an anchor to the faculty biopage. Including `[1]` or not does not change the outcome because there is only one division class within the division block-level for each of the faculty profiles.  
 > >
 > >![Jewish Studies Scraper with 4 paths leading to the same result]({{ page.root }}/fig/Image8.png)
@@ -206,10 +206,10 @@ You should get this path:
 >
 > > ## Solution
 > > After completing all steps you should get the following output: 
+> > 
+> >
+> > ![Screenshot of the Scraper]({{ page.root }}/fig/Image9.png)
 > > ~~~
-> 
-> ![Screenshot of the Scraper]({{ page.root }}/fig/Image9.png)
->
 > > ./div[4]/div[1]/div/a (Email)
 > > ./div[2]/div[2]/div/div (Position)
 > > ./div[4]/div[3]/div/div/ul/li (Office)
