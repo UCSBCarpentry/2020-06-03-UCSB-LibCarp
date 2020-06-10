@@ -205,10 +205,9 @@ You should get this path:
 >
 >
 > > ## Solution
-> > 
+> > After completing all steps you should get the following output: 
 > > ~~~
-> > After completing all steps you should get the following output:
->
+> 
 > ![Screenshot of the Scraper]({{ page.root }}/fig/Image9.png)
 >
 > > ./div[4]/div[1]/div/a (Email)
