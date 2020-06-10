@@ -116,7 +116,7 @@ Let's inspect the link to identify on the developer's console the exact path for
 >>{: .output}
 >> Note that Scraper gave you a starting path based on what you have scraped `//tr[td]`, so you have 
 >> only to add the continuation of it. In order to tell Scraper extension we are only interested in the 
->> emails, we will have to indicate the data that is in the fourth column and add the specific path to 
+>> emails, we will have to indicate the data that is in the fourth node and add the specific path to 
 >> the email address. Don't forget the dot (.) in the beginning of the Xpath expression. As we have 
 >> learned in the previous lesson that is how you tell the path is in the current context node.
 >>
