@@ -4,6 +4,8 @@ title: Setup
 root: .
 ---
 
+[return to lesson](../)
+
 In order to follow this lesson, you will need to make sure the following software is installed on your computer.
 
 ## Part one: Manually scrape data using browser extensions
