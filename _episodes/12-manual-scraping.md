@@ -203,13 +203,14 @@ You should get this path:
 >
 >
 >
-> After completing all steps you should get the following output:
->
-> ![Screenshot of the Scraper]({{ page.root }}/fig/Image9.png)
 >
 > > ## Solution
 > > 
 > > ~~~
+> > After completing all steps you should get the following output:
+>
+> ![Screenshot of the Scraper]({{ page.root }}/fig/Image9.png)
+>
 > > ./div[4]/div[1]/div/a (Email)
 > > ./div[2]/div[2]/div/div (Position)
 > > ./div[4]/div[3]/div/div/ul/li (Office)
