@@ -117,7 +117,7 @@ Let's inspect the link to identify on the developer's console the exact path for
 >> Note that Scraper gave you a starting path based on what you have scraped `//tr[td]`, so you have 
 >> only to add the continuation of it. In order to tell Scraper extension we are only interested in the 
 >> emails, we will have to indicate the data that is in the fourth <td> Table Data Cell Element and add the specific path to 
->> the email address "a". Don't forget the dot (.) in the beginning of the Xpath expression. As we 
+>> the email address `/a` (anchor element). Don't forget the dot (.) in the beginning of the Xpath expression. As we 
 >> learned in the previous lesson, it is how you tell the path is in the current context node.
 >>
 >> You can remove the contact column now and copy the output to the clipboard. 
@@ -190,7 +190,7 @@ You should get this path:
 >
 >
 > > ## solution
-> > The span tag indicates the inline text of a document. If you provide the extra `/a` (which is the anchor element) you are telling Scraper to get the information that is in another child node, which happens to also include the faculty name, linking it to a bio webpage, but without the hyperlink (href) attribute, we will only get the text. Including `[1]` or not does not change the outcome because there is only one division class within the division block-level for each of the faculty profiles.  
+> > The span tag indicates the inline text of a document. If you provide the extra `/a` (anchor element) you are telling Scraper to get the information that is in another child node, which happens to also include the faculty name, linking it to a bio webpage, but without the hyperlink (href) attribute, we will only get the text. Including `[1]` or not does not change the outcome because there is only one division class within the division block-level for each of the faculty profiles.  
 > >
 > >![Jewish Studies Scraper with 4 paths leading to the same result]({{ page.root }}/fig/Image8.png)
 > {: .solution}
