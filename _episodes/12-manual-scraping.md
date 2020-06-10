@@ -140,7 +140,7 @@ If we want to have this data in a more reusable format, we will have to create c
 
 For this particular case, we want to have four columns: 
 
-| 1. Name | 2. Email | 3. Position| 4. Office Location. |
+| 1. Name | 2. Email | 3. Position | 4. Office |
 
 Using the function to inspect where the element is located on the webpage, identify the correct paths, and scrape the information we need. 
 
@@ -200,7 +200,7 @@ You should get this path:
 
 > ## Challenge: Scrape Three Columns
 >
-> Now that you have learned how to get the right path to create columns for names, follow the same steps to get the three other columns Emails, Position, and Office Location.
+> Now that you have learned how to get the right path to create columns for names, follow the same steps to get the three other columns Emails, Position, and Office.
 >
 >
 >
