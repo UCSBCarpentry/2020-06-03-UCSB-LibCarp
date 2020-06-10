@@ -77,13 +77,13 @@ $x("//tr[td]/*[4]")
 ~~~
 {: .source}
 
-This should select only the first column of the table. The same goes for the second column.
+This should select only the fourth column of the table. The same goes for the second column.
 
 But in this case, we don't need to fiddle with the XPath queries too much, as Scraper was able to deduce them for us, and we can copy them into the clipboard in Tab Separated Values (TSV) format for pasting into a text document or a spreadsheet.
 
 There is a bit of data cleaning we might want to do prior to that, though. 
 
-1. The first column is empty because we have selected the photo and scraper recognizes that as an element, however, images are not included in the scrapping process, so we can remove it using the red (-) icon and click on scrape to see the change. Let's do the same thing with column three because we are not interested in their positions or specialties now.
+1. The first column is empty because we have selected the photo and scraper recognizes that as an element, however, images are not included in the scraping process, so we can remove it using the red (-) icon and click on scrape to see the change. Let's do the same thing with column three because we are not interested in their positions or specialties now.
 1. We also want to rename the other columns remaining accordingly, so let's change them to Faculty_name and Contact_info.
 
 ## Custom XPath queries
@@ -91,7 +91,7 @@ Sometimes, however, we do have to do a bit of work to get Scraper to select the 
 
 Note that we still have other info such as office location and times along with emails. So what if we want to get a column only with emails instead? We should add a new column and rename it as Email and use Xpath to help us to refine that. To add another column in Scraper, use the little green "+" icon in the columns list. 
 
-Let's inspect the link to identify on the developer's console the exact path for the email addresses. Select the email > right-click (make sure to not click in the email) > Inspect. Then, hover the mouse over the email > right-click > copy > copy Xpath. Note that there will be an option to copy the Full path but you do not need that as we have already scrapped from a portion of the website.
+Let's inspect the link to identify on the developer's console the exact path for the email addresses. Select the email > right-click (make sure to not click in the email) > Inspect. Then, hover the mouse over the email > right-click > copy > copy Xpath. Note that there will be an option to copy the Full path but you do not need that as we have already scraped from a portion of the website.
 
 > ## Tip:
 > You can copy the path to a notepad, it will help you to compare it with scrap and understand better 
@@ -219,7 +219,6 @@ You should get this path:
 {: .challenge}
 
 
-
 ## Concat Function
  
 
@@ -227,7 +226,7 @@ You should get this path:
 Let's look at another XPath function called concat() that can be used to concatenate things, which basically joins two or more strings into one. If we want to scrape the names along the bio web pages for all faculty we can take the following steps:
 
 
-![Scrapping bio pages with names]({{ page.root }}/fig/Image10.png)
+![Scraping bio pages with names]({{ page.root }}/fig/Image10.png)
 
 
 This extracts the URLs, but as luck would have it, those URLs are relative to the list page (i.e. they are missing `https://www.jewishstudies.ucsb.edu`). 
