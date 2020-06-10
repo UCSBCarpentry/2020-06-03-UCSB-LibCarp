@@ -50,10 +50,20 @@ As useful as scraping is, there might be better options for the task. Choose the
 [Facebook API](https://developers.facebook.com/tools/explorer/), the [Twitter APIs](https://dev.twitter.com/rest/public) or the [YouTube comments API](https://developers.google.com/youtube/v3/docs/commentThreads/list).
 - For much larger needs, Freedom of information requests can be useful. Be specific about the formats required for the data you want.
 
-## Example: scraping UCSB department websites for faculty contact information
+> ## Structured vs unstructured data
+>
+> When presented with information, human beings are good at quickly categorizing it and extracting the data
+> that they are interested in. For example, when we look at a magazine rack, provided the titles are written
+> in a script that we are able to read, we can rapidly figure out the titles of the magazines, the stories they
+> contain, the language they are written in, etc. and we can probably also easily organize them by topic, 
+> recognize those that are aimed at children, or even whether they lean toward a particular end of the
+> political spectrum. Computers have a much harder time making sense of such _unstructured_ data unless
+> we specifically tell them what elements data is made of, for example by adding labels such as
+> _this is the title of this magazine_ or _this is a magazine about food_. Data in which individual elements
+> are separated and labelled is said to be _structured_.
+>
+{: .callout}
 
-In this lesson, we will extract contact information
-from UCSB department faculty pages. This example came from a recent real-life scenario when a couple of our colleagues, Renata and Greg, who will be teaching this section, needed to make lists of social sciences faculty for outreach reasons. There is no overarching list of faculty, contact information, and study area available for the university as a whole. This was made even more difficult by the fact that each UCSB department has webpages with wildly different formating. We will see examples using both the scraping chrome extension and Scrapy through python. There are different scenarios when one might be a better choice than the other.
 
 Let's start by looking at the current list of members of the Canadian parliament, which is available
 on the [Parliament of Canada website](http://www.parl.gc.ca/Parliamentarians/en/members).
@@ -99,19 +109,6 @@ organised inside labelled elements:
 Thanks to these labels, we could relatively easily instruct a computer to look for all parliamentarians from
 Alberta and list their names and caucus information.
 
-> ## Structured vs unstructured data
->
-> When presented with information, human beings are good at quickly categorizing it and extracting the data
-> that they are interested in. For example, when we look at a magazine rack, provided the titles are written
-> in a script that we are able to read, we can rapidly figure out the titles of the magazines, the stories they
-> contain, the language they are written in, etc. and we can probably also easily organize them by topic, 
-> recognize those that are aimed at children, or even whether they lean toward a particular end of the
-> political spectrum. Computers have a much harder time making sense of such _unstructured_ data unless
-> we specifically tell them what elements data is made of, for example by adding labels such as
-> _this is the title of this magazine_ or _this is a magazine about food_. Data in which individual elements
-> are separated and labelled is said to be _structured_.
->
-{: .callout}
 
 Let's look now at the current list of members for the [UK House of Commons](https://www.parliament.uk/mps-lords-and-offices/mps/). 
 
@@ -166,6 +163,24 @@ In this lesson, we will continue exploring the examples above and try different 
 the information they contain. But before we launch into web scraping proper, we need to look
 a bit closer at how information is organized within an HTML document and how to build queries to access
 a specific subset of that information.
+
+## Chrome Extension vs. Scrapy with Python
+Scraper Browser extension: 
+-Need less technical knowledge (python)
+-Quicker for one or two webpages
+
+Scrapy with Python
+-Python adept 
+-More setup
+-Need to scrap multiple pages
+-Reproducibility (run script rather than redo extension steps by hand)
+-Download images or documents
+
+
+## Example: scraping UCSB department websites for faculty contact information
+
+In this lesson, we will extract contact information
+from UCSB department faculty pages. This example came from a recent real-life scenario when a couple of our colleagues, Renata and Greg, who will be teaching this section, needed to make lists of social sciences faculty for outreach reasons. There is no overarching list of faculty, contact information, and study area available for the university as a whole. This was made even more difficult by the fact that each UCSB department has webpages with wildly different formating. We will see examples using both the scraping chrome extension and Scrapy through python. There are different scenarios when one might be a better choice than the other.
 
 # References
 
