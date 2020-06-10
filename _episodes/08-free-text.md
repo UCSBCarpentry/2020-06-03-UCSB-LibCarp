@@ -224,7 +224,7 @@ prepare it even further for rigorous analysis.
 First we wil remove all the html tags. Type and run:
 
 ~~~
-$ sed -e 's/<[^>]*>//g' index-noheadfoot.txt > index-notags.txt
+$ sed -e 's/<[^>]*>/ /g' index-noheadfoot.txt > index-notags.txt
 ~~~
 {: .bash}
 
