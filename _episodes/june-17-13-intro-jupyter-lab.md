@@ -47,41 +47,7 @@ We will access JupyterLab through a cloud-based server called JupyterHub (throug
 > [JupyterLab user interface documentation][jupyterlab-ui].
 {: .callout}
 
-## Starting JupyterLab
 
-### Mac OS X
-To start the JupyterLab server you will need to access the command line through the Terminal.
-There are two ways to open Terminal on Mac.
-
-1. In your Applications folder, open Utilities and double-click on Terminal
-2. Press <kbd>Command</kbd> + <kbd>spacebar</kbd> to launch Spotlight. Type `Terminal` and then
-double-click the search result or hit <kbd>Enter</kbd>
-
-After you have launched Terminal, type the command to launch the JupyterLab server.
-
-~~~
-$ jupyter lab
-~~~
-{: .bash}
-
-### Windows Users
-To start the JupyterLab server you will need to access the open Anaconda Prompt.
-
-Press <kbd>Windows Logo Key</kbd> and search for `Anaconda Prompt`, click the result or press enter.
-
-After you have launched the Anaconda Prompt, type the command:
-
-~~~
-$ jupyter lab
-~~~
-{: .bash}
-
-Below is a screenshot of a similar JupyterLab landing page to the one that should open in your
-default web browser after starting the JupyterLab server on wither Mac OS X or Windows.
-
-<p align='center'>
-  <img alt="JupyterLab landing page" src="../fig/0_jupyterlab_landing_page.png" width="750"/>
-</p>
 
 ## The JupyterLab Interface
 
@@ -521,3 +487,39 @@ does not require an internet connection.
 *   The JupyterLab server does the work and the web browser renders the result.
 *   You will type code into the browser and see the result when the web page talks to the
     JupyterLab server.
+
+## Starting JupyterLab
+
+### Mac OS X
+To start the JupyterLab server you will need to access the command line through the Terminal.
+There are two ways to open Terminal on Mac.
+
+1. In your Applications folder, open Utilities and double-click on Terminal
+2. Press <kbd>Command</kbd> + <kbd>spacebar</kbd> to launch Spotlight. Type `Terminal` and then
+double-click the search result or hit <kbd>Enter</kbd>
+
+After you have launched Terminal, type the command to launch the JupyterLab server.
+
+~~~
+$ jupyter lab
+~~~
+{: .bash}
+
+### Windows Users
+To start the JupyterLab server you will need to access the open Anaconda Prompt.
+
+Press <kbd>Windows Logo Key</kbd> and search for `Anaconda Prompt`, click the result or press enter.
+
+After you have launched the Anaconda Prompt, type the command:
+
+~~~
+$ jupyter lab
+~~~
+{: .bash}
+
+Below is a screenshot of a similar JupyterLab landing page to the one that should open in your
+default web browser after starting the JupyterLab server on wither Mac OS X or Windows.
+
+<p align='center'>
+<img alt="JupyterLab landing page" src="../fig/0_jupyterlab_landing_page.png" width="750"/>
+</p>
