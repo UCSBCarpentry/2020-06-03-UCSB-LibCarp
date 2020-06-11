@@ -2,6 +2,7 @@ FIXME: explanation between notebooks/console/terminal?
 FIXME: add starting terminal instance in JupyterLab
 FIXME: add navigating folders in jupyterlab terminal
 FIXME: add editing files in terminal (review of nano editor)?
+FIXME: this is a small edit to test git commit (disregard)
 ---
 title: "Running and Quitting"
 teaching: 15
