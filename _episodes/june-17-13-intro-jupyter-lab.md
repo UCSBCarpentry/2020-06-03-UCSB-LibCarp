@@ -1,3 +1,7 @@
+FIXME: explanation between notebooks/console/terminal?
+FIXME: add starting terminal instance in JupyterLab
+FIXME: add navigating folders in jupyterlab terminal
+FIXME: add editing files in terminal (review of nano editor)?
 ---
 title: "Running and Quitting"
 teaching: 15
@@ -47,7 +51,9 @@ We will access JupyterLab through a cloud-based server called JupyterHub (throug
 > [JupyterLab user interface documentation][jupyterlab-ui].
 {: .callout}
 
-
+## Starting JupyterLab from JupyterHub
+### Logging in to JupyterHub
+FIXME: add login information
 
 ## The JupyterLab Interface
 
