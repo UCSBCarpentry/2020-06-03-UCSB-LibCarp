@@ -1,8 +1,3 @@
-FIXME: explanation between notebooks/console/terminal?
-FIXME: add starting terminal instance in JupyterLab
-FIXME: add navigating folders in jupyterlab terminal
-FIXME: add editing files in terminal (review of nano editor)?
-
 ---
 title: "Running and Quitting"
 teaching: 15
@@ -25,6 +20,11 @@ keypoints:
 - "The Notebook will turn Markdown into pretty-printed documentation."
 - "Markdown does most of what HTML does."
 ---
+FIXME: explanation between notebooks/console/terminal?
+FIXME: add starting terminal instance in JupyterLab
+FIXME: add navigating folders in jupyterlab terminal
+FIXME: add editing files in terminal (review of nano editor)?
+
 
 ## Getting Started with JupyterLab
 
