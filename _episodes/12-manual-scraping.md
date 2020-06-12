@@ -18,7 +18,7 @@ keypoints:
 
 # Using the Scraper Chrome extension
 
-Now we are finally ready to do some web scraping using Scraper Chrome Extension. Please refer to the <a href="https://librarycarpentry.org/lc-webscraping/setup" target="_blank"> Setup instructions /</a>.
+Now we are finally ready to do some web scraping using Scraper Chrome Extension. Please refer to the <a href="https://librarycarpentry.org/lc-webscraping/setup" target="_blank"> Setup instructions</a>.
 For this lesson, we will be using two UCSB department webpages: East Asian Languages and Cultural Studies and Jewish Studies. We are interested in scraping contact information from faculty within these departments with the help of Xpath and Scraper. 
 
 First, let's focus our attention on the East Asian Languages and Cultural Studies webpage <a href="https://www.eastasian.ucsb.edu/people/faculty/" target="_blank">https://www.eastasian.ucsb.edu/people/faculty/</a>.  
