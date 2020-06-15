@@ -217,8 +217,8 @@ class PsychfacultySpider(scrapy.Spider):
     name = 'psychfaculty'  # The name of this spider
 
     # The allowed domain and the URLs where the spider should start crawling:
-    allowed_domains = ['www.psych.ucsb.edu']
-    start_urls = ['http://www.psych.ucsb.edu/people/']
+    allowed_domains = ['www.psych.ucsb.edu/people?people_type=6']
+    start_urls = ['https://www.psych.ucsb.edu/people?people_type=6']
 
     # And a 'parse' function, which is the main method of the spider. The content of the scraped
     # URL is passed on as the 'response' object:
@@ -325,16 +325,15 @@ has automatically generated.
 
 Here is what the spider looks like after cleaning the code a little:
 
-(editing `ontariompps/ontariompps/spiders/mppaddresses.py`)
+(editing `carpwebscraping/carpwebscraping/spiders/psychfaculty.py`)
 
 ~~~
 import scrapy
 
-class MppaddressesSpider(scrapy.Spider):
-    name = "mppaddresses"  
-
-    allowed_domains = ["www.ontla.on.ca"]
-    start_urls = ['http://www.ontla.on.ca/web/members/members_current.do?locale=en/']
+class PsychfacultySpider(scrapy.Spider):
+    name = 'psychfaculty'
+    allowed_domains = ['www.psych.ucsb.edu']
+    start_urls = ['https://www.psych.ucsb.edu/people?people_type=6']
 
     def parse(self, response):
         pass
@@ -350,11 +349,11 @@ we are located in the project's top level directory (where the `scrapy.cfg` file
 `cd` as required, then we can run:
 
 ~~~
-scrapy crawl mppaddresses
+scrapy crawl psychfaculty
 ~~~
 {: .source}
 
-Note that we can now use the name we have chosen for our spider (`mppaddresses`, as specified in the `name` attribute)
+Note that we can now use the name we have chosen for our spider (`psychfaculty`, as specified in the `name` attribute)
 to call it. This should produce the following result
 
 ~~~
@@ -362,26 +361,32 @@ to call it. This should produce the following result
 
 (followed by a bunch of debugging output ending with:)
 
-2017-02-26 22:08:51 [scrapy.core.engine] DEBUG: Crawled (200) <GET http://www.ontla.on.ca/web/members/members_current.do?locale=en/> (referer: None)
-2017-02-26 22:08:52 [scrapy.core.engine] INFO: Closing spider (finished)
-2017-02-26 22:08:52 [scrapy.statscollectors] INFO: Dumping Scrapy stats:
-{'downloader/request_bytes': 477,
+2020-06-15 22:13:33 [scrapy.core.engine] DEBUG: Crawled (200) <GET https://www.psych.ucsb.edu/people?people_type=6/> (referer: None)
+2020-06-15 22:13:33 [scrapy.core.engine] INFO: Closing spider (finished)
+2020-06-15 22:13:33 [scrapy.statscollectors] INFO: Dumping Scrapy stats:
+{'downloader/request_bytes': 475,
  'downloader/request_count': 2,
  'downloader/request_method_count/GET': 2,
- 'downloader/response_bytes': 34187,
+ 'downloader/response_bytes': 13901,
  'downloader/response_count': 2,
  'downloader/response_status_count/200': 2,
+ 'elapsed_time_seconds': 1.005382,
  'finish_reason': 'finished',
- 'finish_time': datetime.datetime(2017, 2, 27, 3, 8, 52, 16404),
- 'log_count/DEBUG': 3,
- 'log_count/INFO': 7,
+ 'finish_time': datetime.datetime(2020, 6, 15, 22, 13, 33, 856350),
+ 'log_count/DEBUG': 2,
+ 'log_count/INFO': 10,
+ 'memusage/max': 57393152,
+ 'memusage/startup': 57393152,
  'response_received_count': 2,
+ 'robotstxt/request_count': 1,
+ 'robotstxt/response_count': 1,
+ 'robotstxt/response_status_count/200': 1,
  'scheduler/dequeued': 1,
  'scheduler/dequeued/memory': 1,
  'scheduler/enqueued': 1,
  'scheduler/enqueued/memory': 1,
- 'start_time': datetime.datetime(2017, 2, 27, 3, 8, 51, 594573)}
-2017-02-26 22:08:52 [scrapy.core.engine] INFO: Spider closed (finished)
+ 'start_time': datetime.datetime(2020, 6, 15, 22, 13, 32, 850968)}
+2020-06-15 22:13:33 [scrapy.core.engine] INFO: Spider closed (finished)
 
 ~~~
 {: .output}
@@ -394,7 +399,7 @@ and that data (the actual HTML content of that page) was sent back in response.
 However, we didn't do anything with it, because the `parse` method in our spider is currently empty.
 Let's change that by editing the spider as follows (note the contents of the `parse` method):
 
-(editing `ontariompps/ontariompps/spiders/mppaddresses.py`)
+(editing `carpwebscraping/carpwebscraping/spiders/psychfaculty.py`)
 
 ~~~
 import scrapy
@@ -413,7 +418,7 @@ class MppaddressesSpider(scrapy.Spider):
 Now, if we go back to the command line and run our spider again
 
 ~~~
-scrapy crawl mppaddresses
+scrapy crawl psychfaculty
 ~~~
 {: .source}
 
@@ -426,7 +431,7 @@ ls -F
 {: .source}
 
 ~~~
-ontariompps/	scrapy.cfg	test.html
+carpwebscraping/	scrapy.cfg	test.html
 ~~~
 {: .output}
 
@@ -438,29 +443,31 @@ less test.html
 {: .source}
 
 ~~~
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en" >
+<!DOCTYPE html>
+<html lang="en" dir="ltr" prefix="content: http://purl.org/rss/1.0/modules/content/  dc: http://purl.org/dc/terms/  foaf: http://xmlns.com/foaf/0.1/  og: http://ogp.me/ns#  rdfs: http://www.w3.org/2000/01/rdf-schema#  schema: http://schema.org/  sioc: http://rdfs.org/sioc/ns#  sioct: http://rdfs.org/sioc/types#  skos: http://www.w3.org/2004/02/skos/core#  xsd: http://www.w3.org/2001/XMLSchema# ">
 <head>
-(...)
-<title>
-Legislative Assembly of Ontario |
-Members (MPPs) |
-Current MPPs</title>
-(...)_
+  <meta charset="utf-8" />
+<meta name="Generator" content="Drupal 8 (https://www.drupal.org)" />
+<meta name="MobileOptimized" content="width" />
+<meta name="HandheldFriendly" content="true" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="shortcut icon" href="/core/misc/favicon.ico" type="image/vnd.microsoft.icon" />
+<script>window.a2a_config=window.a2a_config||{};a2a_config.callbacks=[];a2a_config.overlays=[];a2a_config.templates={};</script>
 ~~~
 {: .output}
 
 ## Defining which elements to scrape using XPath
 
-Now that we know how to access the content of the [web page with the list of all Ontario MPPs](http://www.ontla.on.ca/web/members/members_current.do?locale=en),
+Now that we know how to access the content of the [web page with the contact information of the psychology faculty](https://www.psych.ucsb.edu/people?people_type=6),
 the next step is to extract the information we are interested in, in that case the URLs pointing
 to the detail pages for each politician.
 
 Using the techniques we have [learned earlier](/02-xpath), we can start by looking at
-the source code for our [target page](http://www.ontla.on.ca/web/members/members_current.do?locale=en)
+the source code for our [target page](https://www.psych.ucsb.edu/people?people_type=6)
 by using either the "View Source" or "Inspect" functions of our browser.
 Here is an excerpt of that page:
 
+FIXME: change code to https://www.psych.ucsb.edu/people?people_type=6
 ~~~
 (...)
 <div class="tablebody">
