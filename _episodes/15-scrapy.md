@@ -213,7 +213,7 @@ We just need to replace `<SCRAPER NAME>` with the name we want to give our spide
 the URL we want to spider to crawl. In our case, we can type:
 
 ~~~
-scrapy genspider psychfaculty https://www.psych.ucsb.edu/people?people_type=6
+scrapy genspider psychfaculty www.psych.ucsb.edu/people?people_type=6
 ~~~
 {: .source}
 
@@ -239,8 +239,6 @@ class PsychfacultySpider(scrapy.Spider):
 
 Note that here some comments have been added for extra clarity, they will not be there upon
 first creating a spider.
-
-
 
 > ## Object-oriented programming and Python classes
 >
@@ -440,7 +438,7 @@ carpwebscraping/	scrapy.cfg	test.html
 We can check that it contains the HTML from our target URL:
 
 ~~~
-less test.html
+head -n 12 test.html
 ~~~
 {: .source}
 
@@ -455,6 +453,8 @@ less test.html
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <link rel="shortcut icon" href="/core/misc/favicon.ico" type="image/vnd.microsoft.icon" />
 <script>window.a2a_config=window.a2a_config||{};a2a_config.callbacks=[];a2a_config.overlays=[];a2a_config.templates={};</script>
+
+    <title>People | Psychological &amp; Brain Sciences | UCSB</title>
 ~~~
 {: .output}
 
