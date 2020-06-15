@@ -53,7 +53,7 @@ If we send too many such requests over a short span of time, we can prevent othe
 from accessing the site during that time, or even cause the server to run out of resources and crash.
 
 In fact, this is such an efficient way to disrupt a web site that hackers are often doing it on purpose.
-This is called a [Denial of Service (DoS) attack](https://en.wikipedia.org/wiki/Denial-of-service_attack).
+This is called a <a href="https://en.wikipedia.org/wiki/Denial-of-service_attack" target="_blank"> Denial of Service (DoS) attack</a>.
 
 Since DoS attacks are unfortunately a common occurence on the Internet, modern web servers include
 measures to ward off such illegitimate use of their resources. They are watchful for large amounts
@@ -164,7 +164,7 @@ be fine.
    hold the right to share is illegal.
 5. __Share what you can.__ If the data you scraped is in the public domain or you got
    permission to share it, then put it out there for other people to reuse it (e.g. on 
-   [datahub.io](https://datahub.io)). If you
+   <a href="https://datahub.io" target="_blank"> datahub.io</a>). If you
    wrote a web scraper to access it, share its code (e.g. on GitHub) so that others can
    benefit from it.
 6. __Don't break the Internet.__ Not all web sites are designed to withstand thousands of
@@ -182,7 +182,7 @@ be fine.
 
 This lesson only provides an introduction to the practice of web scraping and highlights
 some of the tools available. Scrapy has many more features than those mentioned in the
-previous section, be sure to refer to its [full documentation](https://doc.scrapy.org/en/latest/)
+previous section, be sure to refer to its <a href="https://doc.scrapy.org/en/latest/" target="_blank"> full documentation</a> 
 for details.
 
 Happy scraping!
