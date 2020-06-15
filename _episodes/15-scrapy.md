@@ -199,6 +199,16 @@ scrapy genspider <SCRAPER NAME> <START URL>
 ~~~
 {: .source}
 
+> ## Don't include `http://` when running `scrapy genspider`
+>
+> The current version of Scrapy (1.3.2 - February 2017) apparently only expects URLs without
+> `http://` when running `scrapy genspider`. If you do include the `http` prefix, you might
+> see that the value in `start_url` in the generated spider will have that prefix twice, because
+> Scrapy appends it by default. This will cause your spider to fail. Either run `scrapy genspider`
+> without `http://` or check the resulting spider so that it looks like the code above.
+>
+{: .callout}
+
 We just need to replace `<SCRAPER NAME>` with the name we want to give our spider and `<START URL>` with
 the URL we want to spider to crawl. In our case, we can type:
 
@@ -230,15 +240,7 @@ class PsychfacultySpider(scrapy.Spider):
 Note that here some comments have been added for extra clarity, they will not be there upon
 first creating a spider.
 
-> ## Don't include `http://` when running `scrapy genspider`
->
-> The current version of Scrapy (1.3.2 - February 2017) apparently only expects URLs without
-> `http://` when running `scrapy genspider`. If you do include the `http` prefix, you might
-> see that the value in `start_url` in the generated spider will have that prefix twice, because
-> Scrapy appends it by default. This will cause your spider to fail. Either run `scrapy genspider`
-> without `http://` or check the resulting spider so that it looks like the code above.
->
-{: .callout}
+
 
 > ## Object-oriented programming and Python classes
 >
