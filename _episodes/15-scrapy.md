@@ -468,7 +468,6 @@ the source code for our [target page](https://www.psych.ucsb.edu/people?people_t
 by using either the "View Source" or "Inspect" functions of our browser.
 Here is an excerpt of that page:
 
-FIXME: change code to https://www.psych.ucsb.edu/people?people_type=6
 ~~~
 (...)
 <div id="block-psych-content" class="block-system block-psych-content">
@@ -515,15 +514,15 @@ try out in the browser console:
 >
 > The above XPath works in this case because the target `tr` elements are only assigned one
 > `rev--people--row` class. It wouldn't work if those elements had more than one class, for example
-> `<tr class="psychFacultyDisplay primary rev--people-row">` has 3 classes applied to the `tr`.
+> `<tr class="psychFacultyDisplay primary rev--people-row">` which has 3 classes applied to the `tr`.
 >
-> A more specific Xpath to select the elements we're interested in is:
+> A lengthier but more specific Xpath to select the elements we're interested can be found by right clicking the element in the inspector of the webpage you want and then choosing "copy full xpath".  (You might need to trim a number in square brackets at the end of the xpath to select more than a single element.) This results in the following XPath:
 >
 > ~~~
 > `/html/body/div[2]/div[2]/div/div[2]/div/section/div[2]/div/div[2]/div/div/table[2]/tbody/tr`
 > ~~~
 > {: .source}
-> which can be found by right clicking the element in the inspector of the webpage you want and then choosing "copy full xpath".  You might need to trim a number in square brackets at the end of the xpath to select more than a single element.
+> However, as there is only one class assigned to the `tr` element we're interested in we can proceed with the shorter XPath.
 >
 > FIXME: keep this comment?
 > This [comment on StackOverflow](http://stackoverflow.com/a/9133579) has more details on
