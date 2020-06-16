@@ -626,6 +626,7 @@ In [2]:
 >
 > `response.xpath("//a/@href")`
 >  
+> Why are these XPaths not synonymous with one another?
 > > ## Solution
 > > `response.xpath("//a/@href")` matches **all** the link urls from the page including ones we're not particularly interested in.  You can see that the third line is a relative link for the subject area focus of Greg Ashby rather than the next faculty member.
 > >
