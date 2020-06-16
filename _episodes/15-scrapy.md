@@ -444,17 +444,16 @@ head -n 12 test.html
 
 ~~~
 <!DOCTYPE html>
-<html lang="en" dir="ltr" prefix="content: http://purl.org/rss/1.0/modules/content/  dc: http://purl.org/dc/terms/  foaf: http://xmlns.com/foaf/0.1/  og: http://ogp.me/ns#  rdfs: http://www.w3.org/2000/01/rdf-schema#  schema: http://schema.org/  sioc: http://rdfs.org/sioc/ns#  sioct: http://rdfs.org/sioc/types#  skos: http://www.w3.org/2004/02/skos/core#  xsd: http://www.w3.org/2001/XMLSchema# ">
-<head>
-  <meta charset="utf-8" />
-<meta name="Generator" content="Drupal 8 (https://www.drupal.org)" />
-<meta name="MobileOptimized" content="width" />
-<meta name="HandheldFriendly" content="true" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<link rel="shortcut icon" href="/core/misc/favicon.ico" type="image/vnd.microsoft.icon" />
-<script>window.a2a_config=window.a2a_config||{};a2a_config.callbacks=[];a2a_config.overlays=[];a2a_config.templates={};</script>
-
-    <title>People | Psychological &amp; Brain Sciences | UCSB</title>
+  <html lang="en" dir="ltr" prefix="content: http://purl.org/rss/1.0/modules/content/  dc: http://purl.org/dc/terms/  foaf: http://xmlns.com/foaf/0.1/  og: http://ogp.me/ns#  rdfs: http://www.w3.org/2000/01/rdf-schema#  schema: http://schema.org/  sioc: http://rdfs.org/sioc/ns#  sioct: http://rdfs.org/sioc/types#  skos: http://www.w3.org/2004/02/skos/core#  xsd: http://www.w3.org/2001/XMLSchema# ">
+    <head>
+      <meta charset="utf-8" />
+      <meta name="Generator" content="Drupal 8 (https://www.drupal.org)" />
+      <meta name="MobileOptimized" content="width" />
+      <meta name="HandheldFriendly" content="true" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="/core/misc/favicon.ico" type="image/vnd.microsoft.icon" />
+      <script>window.a2a_config=window.a2a_config||{};a2a_config.callbacks=[];a2a_config.overlays=[];a2a_config.templates={};</script>
+      <title>People | Psychological &amp; Brain Sciences | UCSB</title>
 ~~~
 {: .output}
 
@@ -514,9 +513,9 @@ try out in the browser console:
 
 > ## Selecting elements assigned to multiple classes
 >
-> The above XPath works in this case because the target `tr` elements are only assigned one 
+> The above XPath works in this case because the target `tr` elements are only assigned one
 > `rev--people--row` class. It wouldn't work if those elements had more than one class, for example
-> `<tr class="psychFacultyDisplay primary rev--people-row">` has 3 classes applied to the `tr`. 
+> `<tr class="psychFacultyDisplay primary rev--people-row">` has 3 classes applied to the `tr`.
 >
 > A more specific Xpath to select the elements we're interested in is:
 >
@@ -563,7 +562,7 @@ scrapy shell https://www.psych.ucsb.edu/people?people_type=6
 
 which launches a Python console that allows us to type live Python and Scrapy code to
 interact with the page which Scrapy just downloaded from the provided URL. We can see that we are inside an
-interactive python console because the prompt will have changed to `>>>`:
+interactive python console because the prompt will have changed to `In [1]:`:
 
 ~~~
 (similar Scrapy debug text as before)
@@ -579,10 +578,10 @@ interactive python console because the prompt will have changed to `>>>`:
 [s]   spider     <DefaultSpider 'default' at 0x10cb837f0>
 [s] Useful shortcuts:
 [s]   fetch(url[, redirect=True]) Fetch URL and update local objects (by default, redirects are followed)
-[s]   fetch(req)                  Fetch a scrapy.Request and update local objects 
+[s]   fetch(req)                  Fetch a scrapy.Request and update local objects
 [s]   shelp()           Shell help (print this help)
 [s]   view(response)    View response in a browser
->>> 
+>>>
 
 ~~~
 {: .output}
@@ -591,16 +590,17 @@ We can now try running the XPath query we just devised against the `response` ob
 contains the downloaded web page:
 
 ~~~
->>> response.xpath("//tr[@class='rev--people--row']/td/h5/a/@href")
+In [1]: response.xpath("//tr[@class='rev--people--row']/td/h5/a/@href")
 ~~~
 {: .source}
 
 This will return a bunch of `Selector` objects (one for each URL found):
 
 ~~~
-[[<Selector xpath="//tr[@class='rev--people--row']/td/h5/a/@href" data='/people/faculty/nicole-alea-albada'>, <Selector xpath="//tr[@class='rev--people--row']/td/h5/a/@href" data='/people/faculty/greg-ashby'>,
+Out [1]:
+[<Selector xpath="//tr[@class='rev--people--row']/td/h5/a/@href" data='/people/faculty/nicole-alea-albada'>, <Selector xpath="//tr[@class='rev--people--row']/td/h5/a/@href" data='/people/faculty/greg-ashby'>,
  ...]
->>>
+In [2]:
 ~~~
 {: .output}
 
@@ -610,15 +610,15 @@ we can use the `extract()` method. A variant of that method is `extract_first()`
 same thing as `extract()` but only returns the first element if there are more than one:
 
 ~~~
->>> response.xpath("//tr[@class='rev--people--row']/td/h5/a/@href").extract_first()
+In [2]: response.xpath("//tr[@class='rev--people--row']/td/h5/a/@href").extract_first()
 ~~~
 {: .source}
 
 returns
 
 ~~~
-'/people/faculty/nicole-alea-albada'
->>>
+Out [2]: '/people/faculty/nicole-alea-albada'
+In [3]:
 ~~~
 {: .output}
 
@@ -635,21 +635,21 @@ returns
 > variable:
 >
 > ~~~
-> >>> testurl = response.xpath("//tr[@class='rev--people--row']/td/h5/a/@href").extract_first()
+> In [3]: testurl = response.xpath("//tr[@class='rev--people--row']/td/h5/a/@href").extract_first()
 > ~~~
 > {: .source}
 >
 > Then, we can try passing it on to the `urljoin()` method:
 >
 > ~~~
-> >>> response.urljoin(testurl)
+> In [4]: response.urljoin(testurl)
 > ~~~
 > {: .source}
 >
 > which returns
 >
 > ~~~
-> 'https://www.psych.ucsb.edu/people/faculty/nicole-alea-albada'
+> Out [4]:'https://www.psych.ucsb.edu/people/faculty/nicole-alea-albada'
 > ~~~
 > {: .output}
 >
