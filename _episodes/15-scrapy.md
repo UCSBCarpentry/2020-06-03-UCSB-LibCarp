@@ -602,26 +602,24 @@ In [2]:
 ~~~
 {: .output}
 
-**Challenge** FIXME
-
-If we play with the XPath further, we find an even shorter XPath to get a similar result:
-~~~
-response.xpath("//a/@href")
-~~~
-{: .source}
-
-~~~
-Out[2]:
-(...)
-<Selector xpath='//a/@href' data='/people/faculty/nicole-alea-albada'>,
-<Selector xpath='//a/@href' data='/people/faculty/greg-ashby'>,
-<Selector xpath='//a/@href' data='/research/cognition-perception-and-co...'>,
-(...)
-In[3]:
- ~~~
-{: .output}
-
 > ## Challenge: What's the difference between the outputs of these two xpath statments?
+>
+>If we play with the XPaths, we find an even shorter XPath to get a similar result:
+>~~~
+>response.xpath("//a/@href")
+>~~~
+>{: .source}
+>
+>~~~
+>Out[2]:
+>(...)
+><Selector xpath='//a/@href' data='/people/faculty/nicole-alea-albada'>,
+><Selector xpath='//a/@href' data='/people/faculty/greg-ashby'>,
+><Selector xpath='//a/@href' data='/research/cognition-perception-and-co...'>,
+>(...)
+>In[3]:
+>~~~
+>{: .output}
 > `response.xpath("//tr[@class='rev--people--row']/td/h5/a/@href")`
 >
 > versus:
