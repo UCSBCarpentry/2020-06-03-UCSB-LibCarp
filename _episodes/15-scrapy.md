@@ -626,10 +626,18 @@ If we play with the XPath further, we find an even shorter XPath to get a simila
  ~~~
 {: .output}
 
-##Challenge?## What's the difference between the outputs of these two?
-##Solution##
-`response.xpath("//a/@href")` grabs all the urls from the page, you can see that the third line is a relative link for the subject area focus of Greg Ashby rather than the next faculty member.
-{:challenge}
+> ## Challenge: What's the difference between the outputs of these two xpath statments?
+> `response.xpath("//tr[@class='rev--people--row']/td/h5/a/@href")`
+>
+> versus:
+>
+> `response.xpath("//a/@href")`
+>  
+> > ## Solution
+> > `response.xpath("//a/@href")` matches **all** the link urls from the page including ones we're not particularly interested in.  You can see that the third line is a relative link for the subject area focus of Greg Ashby rather than the next faculty member.
+> >
+> {: .solution}
+{: .challenge}
 
 Those objects are pointers to the different element in the scraped page (`href` attributes) as
 defined by our XPath query. To get to the actual content of those elements (the text of the URLs),
