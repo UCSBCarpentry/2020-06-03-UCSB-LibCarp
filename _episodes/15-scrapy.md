@@ -514,16 +514,17 @@ try out in the browser console:
 
 > ## Selecting elements assigned to multiple classes
 >
-> The above XPath works in this case because the target `tr` elements are only assigned to the
+> The above XPath works in this case because the target `tr` elements are only assigned one 
 > `rev--people--row` class. It wouldn't work if those elements had more than one class, for example
-> `<tr class="pysch--sampleclass">`. The more general syntax to select elements that belong to
-> the `rev--people--row` class and potentially other classes as well is
+> `<tr class="psychFacultyDisplay primary rev--people-row">` has 3 classes applied to the `tr`. 
+>
+> A more specific Xpath to select the elements we're interested in is:
 >
 > ~~~
-> `/html/body/div[2]/div[2]/div/div[2]/div/section/div[2]/div/div[2]/div/div/table[2]/tbody/tr[1]`
+> `/html/body/div[2]/div[2]/div/div[2]/div/section/div[2]/div/div[2]/div/div/table[2]/tbody/tr`
 > ~~~
 > {: .source}
-> which can be found by right clicking the element on the webpage you want and then choosing "copy full xpath"
+> which can be found by right clicking the element in the inspector of the webpage you want and then choosing "copy full xpath".  You might need to trim a number in square brackets at the end of the xpath to select more than a single element.
 >
 > FIXME: keep this comment?
 > This [comment on StackOverflow](http://stackoverflow.com/a/9133579) has more details on
@@ -531,7 +532,7 @@ try out in the browser console:
 >
 {: .discussion}
 
-Once we were able to confirm that we are targeting the right cells, we can expand our XPath query
+Once we were able to confirm that we are targeting the right elements, we can expand our XPath query
 to only select the `href` attribute of the URL:
 
 ~~~
@@ -540,7 +541,7 @@ to only select the `href` attribute of the URL:
 {: .source}
 
 This returns an array of objects:
-
+<img src="../fig/chrome-screen-shot-xpath-selecting-elements.png">
 ~~~
 <- (44) [href, href, href, href, href, href, href, href, href, href, href, href, href, href, href, href, href, href, href, href, href, href, href, href, href, href, href, href, href, href, href, href, href, href, href, href, href, href, href, href, href, href, href, href]
 ~~~
@@ -556,7 +557,7 @@ queries from within Scrapy.
 This is achieved by calling the _Scrapy shell_ from the command line:
 
 ~~~
-scrapy shell http://www.ontla.on.ca/web/members/members_current.do?locale=en/
+scrapy shell https://www.psych.ucsb.edu/people?people_type=6
 ~~~
 {: .source}
 
@@ -567,21 +568,22 @@ interactive python console because the prompt will have changed to `>>>`:
 ~~~
 (similar Scrapy debug text as before)
 
-2017-02-26 22:31:04 [scrapy.core.engine] DEBUG: Crawled (200) <GET http://www.ontla.on.ca/web/members/members_current.do?locale=en/> (referer: None)
+2020-06-15 22:53:08 [scrapy.core.engine] DEBUG: Crawled (200) <GET https://www.psych.ucsb.edu/people?people_type=6> (referer: None)
 [s] Available Scrapy objects:
 [s]   scrapy     scrapy module (contains scrapy.Request, scrapy.Selector, etc)
-[s]   crawler    <scrapy.crawler.Crawler object at 0x1114356d8>
+[s]   crawler    <scrapy.crawler.Crawler object at 0x10c7eae80>
 [s]   item       {}
-[s]   request    <GET http://www.ontla.on.ca/web/members/members_current.do?locale=en/>
-[s]   response   <200 http://www.ontla.on.ca/web/members/members_current.do?locale=en/>
-[s]   settings   <scrapy.settings.Settings object at 0x111f40908>
-[s]   spider     <DefaultSpider 'default' at 0x11320acc0>
+[s]   request    <GET https://www.psych.ucsb.edu/people?people_type=6>
+[s]   response   <200 https://www.psych.ucsb.edu/people?people_type=6>
+[s]   settings   <scrapy.settings.Settings object at 0x10c7ead30>
+[s]   spider     <DefaultSpider 'default' at 0x10cb837f0>
 [s] Useful shortcuts:
 [s]   fetch(url[, redirect=True]) Fetch URL and update local objects (by default, redirects are followed)
-[s]   fetch(req)                  Fetch a scrapy.Request and update local objects
+[s]   fetch(req)                  Fetch a scrapy.Request and update local objects 
 [s]   shelp()           Shell help (print this help)
 [s]   view(response)    View response in a browser
->>>
+>>> 
+
 ~~~
 {: .output}
 
@@ -589,15 +591,14 @@ We can now try running the XPath query we just devised against the `response` ob
 contains the downloaded web page:
 
 ~~~
->>> response.xpath("//td[@class='mppcell']/a/@href")
+>>> response.xpath("//tr[@class='rev--people--row']/td/h5/a/@href")
 ~~~
 {: .source}
 
 This will return a bunch of `Selector` objects (one for each URL found):
 
 ~~~
-[<Selector xpath="//td[@class='mppcell']/a/@href" data='members_detail.do?locale=en&ID=7085'>,
- <Selector xpath="//td[@class='mppcell']/a/@href" data='members_detail.do?locale=en&ID=7275'>,
+[[<Selector xpath="//tr[@class='rev--people--row']/td/h5/a/@href" data='/people/faculty/nicole-alea-albada'>, <Selector xpath="//tr[@class='rev--people--row']/td/h5/a/@href" data='/people/faculty/greg-ashby'>,
  ...]
 >>>
 ~~~
@@ -609,14 +610,14 @@ we can use the `extract()` method. A variant of that method is `extract_first()`
 same thing as `extract()` but only returns the first element if there are more than one:
 
 ~~~
->>> response.xpath("//td[@class='mppcell']/a/@href").extract_first()
+>>> response.xpath("//tr[@class='rev--people--row']/td/h5/a/@href").extract_first()
 ~~~
 {: .source}
 
 returns
 
 ~~~
-'members_detail.do?locale=en&ID=7085'
+'/people/faculty/nicole-alea-albada'
 >>>
 ~~~
 {: .output}
@@ -634,7 +635,7 @@ returns
 > variable:
 >
 > ~~~
-> >>> testurl = response.xpath("//td[@class='mppcell']/a/@href").extract_first()
+> >>> testurl = response.xpath("//tr[@class='rev--people--row']/td/h5/a/@href").extract_first()
 > ~~~
 > {: .source}
 >
@@ -648,7 +649,7 @@ returns
 > which returns
 >
 > ~~~
-> 'http://www.ontla.on.ca/web/members/members_detail.do?locale=en&ID=7085'
+> 'https://www.psych.ucsb.edu/people/faculty/nicole-alea-albada'
 > ~~~
 > {: .output}
 >
