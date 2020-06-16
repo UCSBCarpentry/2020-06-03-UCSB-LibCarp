@@ -464,7 +464,7 @@ Now that we know how to access the content of the [web page with the contact inf
 the next step is to extract the information we are interested in, in that case the URLs pointing
 to the detail pages for each politician.
 
-Using the techniques we have [learned earlier](/02-xpath), we can start by looking at
+Using the techniques we have [learned earlier](/12-manual-scraping), we can start by looking at
 the source code for our [target page](https://www.psych.ucsb.edu/people?people_type=6)
 by using either the "View Source" or "Inspect" functions of our browser.
 Here is an excerpt of that page:
@@ -472,58 +472,60 @@ Here is an excerpt of that page:
 FIXME: change code to https://www.psych.ucsb.edu/people?people_type=6
 ~~~
 (...)
-<div class="tablebody">
-	<table>
-		<tr class="oddrow" id="MemberID7085">
-			<td class="mppcell" >
-				<a href="members_detail.do?locale=en&amp;ID=7085">
-					Albanese, Hon Laura&nbsp;
-				</a>
-			</td>
-			<td class="ridingcell" >
-				York South&#8212;Weston&nbsp;
-			</td>
-		</tr>
-		<tr class="evenrow" id="MemberID7275">
-			<td class="mppcell" >
-				<a href="members_detail.do?locale=en&amp;ID=7275">
-					Anderson, Granville&nbsp;
-				</a>
-			</td>
-			<td class="ridingcell" >
-				Durham&nbsp;
-			</td>
-		</tr>
-		(...)
-	</table>
-</div>
+<div id="block-psych-content" class="block-system block-psych-content">
+  <div class="views-element-container"><div class="peep--main-container js-view-dom-id-b141f8be3e80bfcacf768b6ca21b47b1730ea874f362d3a36f945b2c5bab2e4d">
+    <table class="cols-0 sticky-enabled">
+      <tbody>
+          <tr class="rev--people--row">
+              <td>
+                <h5>
+                  <a href="/people/faculty/nicole-alea-albada" hreflang="en">Nicole Alea Albada</a></h5>
+                <p>Assistant Teaching Professor</p></td>
+              <td class="about--teaser"></td>
+              <td> </td>
+          </tr>
+          <tr class="rev--people--row">
+              <td>
+                <h5>
+                  <a href="/people/faculty/greg-ashby" hreflang="en">Greg Ashby</a></h5>
+                <p>Distinguished Professor</p> </td>
+              <td class="about--teaser">Professor Ashby is interested in the basic cognitive and neural mechanisms that mediate human learning. His approach combines experimental psychology, cognitive neuroscience, and mathematical modeling </td>
+              <td>
+                <ul>
+                  <li>
+                    <a href="/research/cognition-perception-and-cognitive-neuroscience" hreflang="en">Cognition, Perception, and Cognitive Neuroscience</a></li>
+                </ul>
+                <a href="http://www.dyns.ucsb.edu/">Dynamical Neuroscience</a></td>
+          </tr>
 (...)
 ~~~
 {: .output}
 
 There are different strategies to target the data we are interested in. One of them is to identify
-that the URLs are inside `td` elements of the class `mppcell`.
+that the URLs are inside the `a` elements which are respectively in the `h5` elements which are inside the `td` elements which are within the `tr` elements of the class `rev--people--row`.
 
-We recall that the XPath syntax to access all such elements is `//td[@class='mppcell']`, which we can
+We can determine that the XPath syntax to access all such elements is `//tr[@class='rev--people--row']`, which we can
 try out in the browser console:
 
 ~~~
-> $x("//td[@class='mppcell']")
+> $x("//tr[@class='rev--people--row']")
 ~~~
 {: .source}
 
 > ## Selecting elements assigned to multiple classes
 >
-> The above XPath works in this case because the target `td` elements are only assigned to the
-> `mppcell` class. It wouldn't work if those elements had more than one class, for example
-> `<td class="mppcell sampleclass">`. The more general syntax to select elements that belong to
-> the `mppcell` class and potentially other classes as well is
+> The above XPath works in this case because the target `tr` elements are only assigned to the
+> `rev--people--row` class. It wouldn't work if those elements had more than one class, for example
+> `<tr class="pysch--sampleclass">`. The more general syntax to select elements that belong to
+> the `rev--people--row` class and potentially other classes as well is
 >
 > ~~~
-> `//*[contains(concat(" ", normalize-space(@class), " "), " mppcell ")]`
+> `/html/body/div[2]/div[2]/div/div[2]/div/section/div[2]/div/div[2]/div/div/table[2]/tbody/tr[1]`
 > ~~~
 > {: .source}
+> which can be found by right clicking the element on the webpage you want and then choosing "copy full xpath"
 >
+> FIXME: keep this comment?
 > This [comment on StackOverflow](http://stackoverflow.com/a/9133579) has more details on
 > this issue.
 >
@@ -533,14 +535,14 @@ Once we were able to confirm that we are targeting the right cells, we can expan
 to only select the `href` attribute of the URL:
 
 ~~~
-> $x("//td[@class='mppcell']/a/@href")
+> $x("//tr[@class='rev--people--row']/td/h5/a/@href")
 ~~~
 {: .source}
 
 This returns an array of objects:
 
 ~~~
-<- Array [ href="members_detail.do?locale=en&amp;ID=7085", href="members_detail.do?locale=en&amp;ID=7275", 103 more… ]
+<- (44) [href, href, href, href, href, href, href, href, href, href, href, href, href, href, href, href, href, href, href, href, href, href, href, href, href, href, href, href, href, href, href, href, href, href, href, href, href, href, href, href, href, href, href, href]
 ~~~
 {: .output}
 
