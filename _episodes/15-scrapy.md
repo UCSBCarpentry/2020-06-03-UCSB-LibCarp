@@ -608,10 +608,11 @@ This will return a bunch of `Selector` objects (one for each URL found):
 ~~~
 {: .output}
 
-**Challenge**
+**Challenge** FIXME
+
 If we play with the XPath further, we find an even shorter XPath to get a similar result:
 ~~~
-**In [2]:** response.xpath("//a/@href")
+response.xpath("//a/@href")
 ~~~
 {: .source}
 
@@ -639,13 +640,12 @@ If we play with the XPath further, we find an even shorter XPath to get a simila
 > {: .solution}
 {: .challenge}
 
-Those objects are pointers to the different element in the scraped page (`href` attributes) as
-defined by our XPath query. To get to the actual content of those elements (the text of the URLs),
+The objects returned from our `response.xpath()` are pointers to the elements in the scraped page (`href` attributes) that match our XPath query. To get to the actual content of those elements (the text of the URLs),
 we can use the `extract()` method. A variant of that method is `extract_first()` which does the
-same thing as `extract()` but only returns the first element if there are more than one:
+same thing as `extract()` but only returns the first element if there is more than one:
 
 ~~~
-**In [3]:** response.xpath("//tr[@class='rev--people--row']/td/h5/a/@href").extract()
+response.xpath("//tr[@class='rev--people--row']/td/h5/a/@href").extract()
 ~~~
 {: .source}
 
@@ -670,14 +670,14 @@ returns
 > variable:
 >
 > ~~~
-> In [4]: testurl = response.xpath("//tr[@class='rev--people--row']/td/h5/a/@href").extract_first()
+>  testurl = response.xpath("//tr[@class='rev--people--row']/td/h5/a/@href").extract_first()
 > ~~~
 > {: .source}
 >
 > Then, we can try passing it on to the `urljoin()` method:
 >
 > ~~~
-> In [5]: response.urljoin(testurl)
+>  response.urljoin(testurl)
 > ~~~
 > {: .source}
 >
