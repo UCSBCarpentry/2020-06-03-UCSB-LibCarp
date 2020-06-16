@@ -401,6 +401,10 @@ Let's change that by editing the spider as follows (note the contents of the `pa
 
 (editing `carpwebscraping/carpwebscraping/spiders/psychfaculty.py`)
 
+add:<br> 
+<tt><mark>&nbsp;&nbsp;        with open("test.html", 'wb') as file:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;            file.write(response.body)</mark></tt>
+
 ~~~
 import scrapy
 
@@ -589,7 +593,7 @@ We can now try running the XPath query we just devised against the `response` ob
 contains the downloaded web page:
 
 ~~~
-**In [1]:** response.xpath("//tr[@class='rev--people--row']/td/h5/a/@href")
+ response.xpath("//tr[@class='rev--people--row']/td/h5/a/@href")
 ~~~
 {: .source}
 
