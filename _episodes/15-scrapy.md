@@ -589,40 +589,43 @@ We can now try running the XPath query we just devised against the `response` ob
 contains the downloaded web page:
 
 ~~~
-In [1]: response.xpath("//tr[@class='rev--people--row']/td/h5/a/@href")
+**In [1]:** response.xpath("//tr[@class='rev--people--row']/td/h5/a/@href")
 ~~~
 {: .source}
 
 This will return a bunch of `Selector` objects (one for each URL found):
 
 ~~~
-Out [1]:
+**Out[1]:**
 [<Selector xpath="//tr[@class='rev--people--row']/td/h5/a/@href" data='/people/faculty/nicole-alea-albada'>,
 <Selector xpath="//tr[@class='rev--people--row']/td/h5/a/@href" data='/people/faculty/greg-ashby'>,
  ...]
-In [2]:
+**In [2]:**
 ~~~
 {: .output}
 
-**KEEP?** or use longer xpath that doesn't need to be refined by people/faculty
-If we play with the XPath further, we see that we can use an even shorter XPath to get a similar result:
+**Challenge**
+If we play with the XPath further, we find an even shorter XPath to get a similar result:
 ~~~
-In [2]: response.xpath("//a/@href")
+**In [2]:** response.xpath("//a/@href")
 ~~~
 {: .source}
 
 ~~~
-Out [2]:
+**Out[2]:**
 (...)
 <Selector xpath='//a/@href' data='/people/faculty/nicole-alea-albada'>,
- <Selector xpath='//a/@href' data='/people/faculty/greg-ashby'>,
- <Selector xpath='//a/@href' data='/research/cognition-perception-and-co...'>,
-
- (...)
+<Selector xpath='//a/@href' data='/people/faculty/greg-ashby'>,
+<Selector xpath='//a/@href' data='/research/cognition-perception-and-co...'>,
+(...)
+**In[3]:**
  ~~~
- {: .output}
+{: .output}
 
 ##Challenge?## What's the difference between the outputs of these two?
+##Solution##
+`response.xpath("//a/@href")` grabs all the urls from the page, you can see that the third line is a relative link for the subject area focus of Greg Ashby rather than the next faculty member.
+{:challenge}
 
 Those objects are pointers to the different element in the scraped page (`href` attributes) as
 defined by our XPath query. To get to the actual content of those elements (the text of the URLs),
@@ -630,18 +633,17 @@ we can use the `extract()` method. A variant of that method is `extract_first()`
 same thing as `extract()` but only returns the first element if there are more than one:
 
 ~~~
-In [3]: response.xpath("//tr[@class='rev--people--row']/td/h5/a/@href").extract()
+**In [3]:** response.xpath("//tr[@class='rev--people--row']/td/h5/a/@href").extract()
 ~~~
 {: .source}
 
 returns
 
 ~~~
-Out [3]: '/people/faculty/nicole-alea-albada'
-In [4]:
+**Out[3]:** '/people/faculty/nicole-alea-albada'
+**In [4]:**
 ~~~
 {: .output}
-
 
 > ## Dealing with relative URLs
 >
@@ -670,7 +672,7 @@ In [4]:
 > which returns
 >
 > ~~~
-> Out [5]:'https://www.psych.ucsb.edu/people/faculty/nicole-alea-albada'
+> Out[5]:'https://www.psych.ucsb.edu/people/faculty/nicole-alea-albada'
 > ~~~
 > {: .output}
 >
@@ -722,14 +724,14 @@ the `xpath()` method and update the spider accordingly:
 ~~~
 import scrapy
 
-class PsychfacultySpider(scrapy.Spider):
+  class PsychfacultySpider(scrapy.Spider):
     name = 'psychfaculty'
     allowed_domains = ['www.psych.ucsb.edu']
     start_urls = ['https://www.psych.ucsb.edu/people?people_type=6']
 
     def parse(self, response):
-        for url in response.xpath("//tr[@class='rev--people--row']/td/h5/a/@href").extract_first():
-            print(response.urljoin(url))
+      for url in response.xpath("//tr[@class='rev--people--row']/td/h5/a/@href").extract():
+        print(response.urljoin(url))
 ~~~
 {: .source}
 
@@ -759,19 +761,25 @@ scrapy crawl pyschfaculty
 which produces a result similar to:
 
 ~~~
-2017-02-26 23:06:10 [scrapy.utils.log] INFO: Scrapy 1.3.2 started (bot: ontariompps)
+2020-06-16 20:52:29 [scrapy.utils.log] INFO: Scrapy 2.1.0 started (bot: carpwebscraping)
+(..)
+https://www.psych.ucsb.edu/people/faculty/nicole-alea-albada
+https://www.psych.ucsb.edu/people/faculty/greg-ashby
+https://www.psych.ucsb.edu/people/faculty/michael-beyeler
+https://www.psych.ucsb.edu/people/faculty/jim-blascovich
+https://www.psych.ucsb.edu/people/faculty/nancy-collins
+https://www.psych.ucsb.edu/people/faculty/daniel-conroy-beam
+https://www.psych.ucsb.edu/people/faculty/leda-cosmides
+https://www.psych.ucsb.edu/people/faculty/miguel-eckstein
+https://www.psych.ucsb.edu/people/faculty/aaron-ettenberg
+https://www.psych.ucsb.edu/people/faculty/john-foley
 (...)
-http://www.ontla.on.ca/web/members/members_detail.do?locale=en&ID=2111
-http://www.ontla.on.ca/web/members/members_detail.do?locale=en&ID=2139
-http://www.ontla.on.ca/web/members/members_detail.do?locale=en&ID=7174
-http://www.ontla.on.ca/web/members/members_detail.do?locale=en&ID=2148
-(...)
-2017-02-26 23:06:11 [scrapy.core.engine] INFO: Spider closed (finished)
+2020-06-16 20:52:29 [scrapy.core.engine] INFO: Spider closed (finished)
 ~~~
 {: .output}
 
 We can now pat ourselves on the back, as we have successfully completed the first stage
-of our project by successfully extracing all URLs leading to the minister profiles!
+of our project by successfully extracting all URLs leading to the minister profiles!
 
 > ## Limit the number of URL to scrape through while debugging
 >
@@ -803,16 +811,16 @@ of our project by successfully extracing all URLs leading to the minister profil
 > We can therefore edit our spider thusly to only scrape the first five URLs:
 >
 > ~~~
-> import scrapy
+>import scrapy
 >
->    class MppaddressesSpider(scrapy.Spider):
->        name = "mppaddresses"
->        allowed_domains = ["www.ontla.on.ca"]
->        start_urls = ['http://www.ontla.on.ca/web/members/members_current.do?locale=en/']
+>   class PsychfacultySpider(scrapy.Spider):
+>     name = 'psychfaculty'
+>     allowed_domains = ['www.psych.ucsb.edu']
+>     start_urls = ['https://www.psych.ucsb.edu/people?people_type=6']
 >
->        def parse(self, response):
->            for url in response.xpath("//*[@class='mppcell']/a/@href").extract()[:5]:
->                print(response.urljoin(url))
+>   def parse(self, response):
+>     for url in response.xpath("//tr[@class='rev--people--row']/td/h5/a/@href").extract()[:5]:
+>       print(response.urljoin(url))
 > ~~~
 > {: .source}
 >
