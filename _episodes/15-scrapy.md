@@ -401,6 +401,10 @@ Let's change that by editing the spider as follows (note the contents of the `pa
 
 (editing `carpwebscraping/carpwebscraping/spiders/psychfaculty.py`)
 
+add:<br> 
+<tt><mark>&nbsp;&nbsp;        with open("test.html", 'wb') as file:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;            file.write(response.body)</mark></tt>
+
 ~~~
 import scrapy
 
