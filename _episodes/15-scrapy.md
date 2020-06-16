@@ -834,39 +834,39 @@ of our project by successfully extracting all URLs leading to the minister profi
 Now that we were successful in harvesting the URLs to the detail pages, let's begin by editing
 our spider to instruct it to visit those pages one by one.
 
-For this, let's begin by defining a new method `get_details` that we want to run on the detail pages:
+For this, let's begin by defining a new method `biopage` that we want to run on the individual faculty biopages:
 
 
-(editing `ontariompps/ontariompps/spiders/mppaddresses.py`)
+(editing `carpwebscraping/carpwebscraping/spiders/psychfaculty.py`)
 
 ~~~
 import scrapy
 
-class MppaddressesSpider(scrapy.Spider):
-    name = "mppaddresses" # The name of this spider
+class PsychfacultySpider(scrapy.Spider):
+    name = "psychfaculty" # The name of this spider
 
     # The allowed domain and the URLs where the spider should start crawling:
-    allowed_domains = ["www.ontla.on.ca"]
-    start_urls = ['http://www.ontla.on.ca/web/members/members_current.do?locale=en/']
+    allowed_domains = ['www.psych.ucsb.edu']
+    start_urls = ['https://www.psych.ucsb.edu/people?people_type=6']
 
     def parse(self, response):
         # The main method of the spider. It scrapes the URL(s) specified in the
         # 'start_url' argument above. The content of the scraped URL is passed on
         # as the 'response' object.
 
-        for url in response.xpath("//*[@class='mppcell']/a/@href").extract()[:5]:
-            # This loops through all the URLs found inside an element of class 'mppcell'
+        for url in response.xpath("//tr[@class='rev--people--row']/td/h5/a/@href").extract()[:5]:
+            # This loops through all the URLs found inside an element of class 'rev--people--row'
 
             # Constructs an absolute URL by combining the response’s URL with a possible relative URL:
             full_url = response.urljoin(url)
             print("Found URL: "+full_url)
 
             # The following tells Scrapy to scrape the URL in the 'full_url' variable
-            # and calls the 'get_details() method below with the content of this
+            # and calls the 'biopage() method below with the content of this
             # URL:
-            yield scrapy.Request(full_url, callback=self.get_details)
+            yield scrapy.Request(full_url, callback=self.biopage)
 
-    def get_details(self, response):
+    def biopage(self, response):
         # This method is called on by the 'parse' method above. It scrapes the URLs
         # that have been extracted in the previous step.
         print("Visited URL: "+response.url)
@@ -878,36 +878,42 @@ We've also added some comments to the code to make it easier to read and underst
 If we now run our spider again:
 
 ~~~
-scrapy crawl mppaddresses
+scrapy crawl psychfaculty
 ~~~
 {: .source}
 
-We should see the result of our `print` statements intersped with the regular Scrapy
+We should see the result of our `print` statements interspersed with the regular Scrapy
 debugging output, something like:
 
 ~~~
-2017-02-27 20:39:42 [scrapy.utils.log] INFO: Scrapy 1.3.2 started (bot: ontariompps)
+2020-06-16 21:24:30 [scrapy.utils.log] INFO: Scrapy 2.1.0 started (bot: test3)
 (...)
-2017-02-27 20:39:43 [scrapy.core.engine] DEBUG: Crawled (200) <GET http://www.ontla.on.ca/web/members/members_current.do?locale=en/> (referer: None)
-Found URL: http://www.ontla.on.ca/web/members/members_detail.do?locale=en&ID=7085
-Found URL: http://www.ontla.on.ca/web/members/members_detail.do?locale=en&ID=7275
+2020-06-16 21:24:30 [scrapy.core.engine] DEBUG: Crawled (200) <GET https://www.psych.ucsb.edu/robots.txt> (referer: None)
+2020-06-16 21:24:30 [scrapy.core.engine] DEBUG: Crawled (200) <GET https://www.psych.ucsb.edu/people?people_type=6> (referer: None)
+https://www.psych.ucsb.edu/people/faculty/nicole-alea-albada
+https://www.psych.ucsb.edu/people/faculty/greg-ashby
+https://www.psych.ucsb.edu/people/faculty/michael-beyeler
+https://www.psych.ucsb.edu/people/faculty/jim-blascovich
+https://www.psych.ucsb.edu/people/faculty/nancy-collins
+2020-06-16 21:24:30 [scrapy.core.engine] DEBUG: Crawled (200) <GET https://www.psych.ucsb.edu/people/faculty/nicole-alea-albada> (referer: https://www.psych.ucsb.edu/people?people_type=6)
+2020-06-16 21:24:31 [scrapy.core.engine] DEBUG: Crawled (200) <GET https://www.psych.ucsb.edu/people/faculty/jim-blascovich> (referer: https://www.psych.ucsb.edu/people?people_type=6)
+Visited URL: https://www.psych.ucsb.edu/people/faculty/nicole-alea-albada
+2020-06-16 21:24:31 [scrapy.core.engine] DEBUG: Crawled (200) <GET https://www.psych.ucsb.edu/people/faculty/nancy-collins> (referer: https://www.psych.ucsb.edu/people?people_type=6)
+2020-06-16 21:24:31 [scrapy.core.engine] DEBUG: Crawled (200) <GET https://www.psych.ucsb.edu/people/faculty/greg-ashby> (referer: https://www.psych.ucsb.edu/people?people_type=6)
+2020-06-16 21:24:31 [scrapy.core.engine] DEBUG: Crawled (200) <GET https://www.psych.ucsb.edu/people/faculty/michael-beyeler> (referer: https://www.psych.ucsb.edu/people?people_type=6)
+Visited URL: https://www.psych.ucsb.edu/people/faculty/jim-blascovich
+Visited URL: https://www.psych.ucsb.edu/people/faculty/nancy-collins
+Visited URL: https://www.psych.ucsb.edu/people/faculty/greg-ashby
+Visited URL: https://www.psych.ucsb.edu/people/faculty/michael-beyeler
 (...)
-2017-02-27 20:39:44 [scrapy.core.engine] DEBUG: Crawled (200) <GET http://www.ontla.on.ca/web/members/members_detail.do?locale=en&ID=7085> (referer: http://www.ontla.on.ca/web/members/members_current.do?locale=en/)
-(...)
-Visited URL: http://www.ontla.on.ca/web/members/members_detail.do?locale=en&ID=7085
-(...)
-2017-02-27 20:39:44 [scrapy.core.engine] DEBUG: Crawled (200) <GET http://www.ontla.on.ca/web/members/members_detail.do?locale=en&ID=7086> (referer: http://www.ontla.on.ca/web/members/members_current.do?locale=en/)
-(...)
-Visited URL: http://www.ontla.on.ca/web/members/members_detail.do?locale=en&ID=7225
-(...)
-2017-02-27 20:39:44 [scrapy.core.engine] INFO: Closing spider (finished)
+2020-06-16 21:24:31 [scrapy.core.engine] INFO: Spider closed (finished)
 ~~~
 {: .output}
 
 We've truncated the results above to make it easier to read, but on your console
 you should see that all 5 URLs (remember, we are limiting the number of URLs to scrape
 for now) have been first "found" (by the `parse()` method) and then "visited"
-(by the `get_details()` method).
+(by the `biopage()` method).
 
 > ## Asynchronous requests
 >
@@ -936,21 +942,14 @@ Now that we are able to visit each one of the detail pages, we should work on ge
 data that we want out of them. In our example, we are primarily looking
 to extract the following details:
 
-* Phone number(s)
-* Email address(es)
+* Position title
+* Email address
 
-Unfortunately, it looks like the content of those pages is not consistent. Sometimes, only
-one email address is displayed, sometimes more than one. Some MPPs have one Constituency
-address, others have more than one, etc.
 
-To simplify, we are going to stop at the first phone number and the first
-email address we find on those pages, although in a real life scenario we might be interested
-in writing more precise queries to make sure we are collecting the right information.
-
-> ## Scrape phone number and email address
+> ## Scrape position title and email address
 > Write XPath queries to scrape the first phone number and the first email address
 > displayed on each of the detail pages that are linked from
-> the [Ontario MPPs list](http://www.ontla.on.ca/web/members/members_current.do?locale=en).
+> the [UCSB psychology faculty page](https://www.psych.ucsb.edu/people?people_type=6).
 >
 > Try out your queries on a handful of detail pages to make sure you are getting
 > consistent results.
@@ -967,8 +966,8 @@ in writing more precise queries to make sure we are collecting the right informa
 >
 > > ## Solution
 > >
-> > This returns an array of phone (and fax) numbers (using the Scrapy shell):
-> >
+> > This returns an array of position titles (using the Scrapy shell):
+> > ##FIXME resume editing here
 > > ~~~
 > > scrapy shell "http://www.ontla.on.ca/web/members/members_detail.do?locale=en&ID=7085"
 > > >>> response.xpath("//div[@class='phone']/text()").extract()
