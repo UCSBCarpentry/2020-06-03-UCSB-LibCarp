@@ -598,11 +598,32 @@ This will return a bunch of `Selector` objects (one for each URL found):
 
 ~~~
 Out [1]:
-[<Selector xpath="//tr[@class='rev--people--row']/td/h5/a/@href" data='/people/faculty/nicole-alea-albada'>, <Selector xpath="//tr[@class='rev--people--row']/td/h5/a/@href" data='/people/faculty/greg-ashby'>,
+[<Selector xpath="//tr[@class='rev--people--row']/td/h5/a/@href" data='/people/faculty/nicole-alea-albada'>,
+<Selector xpath="//tr[@class='rev--people--row']/td/h5/a/@href" data='/people/faculty/greg-ashby'>,
  ...]
 In [2]:
 ~~~
 {: .output}
+
+**KEEP?** or use longer xpath that doesn't need to be refined by people/faculty
+If we play with the XPath further, we see that we can use an even shorter XPath to get a similar result:
+~~~
+In [2]: response.xpath("//a/@href")
+~~~
+{: .source}
+
+~~~
+Out [2]:
+(...)
+<Selector xpath='//a/@href' data='/people/faculty/nicole-alea-albada'>,
+ <Selector xpath='//a/@href' data='/people/faculty/greg-ashby'>,
+ <Selector xpath='//a/@href' data='/research/cognition-perception-and-co...'>,
+
+ (...)
+ ~~~
+ {: .output}
+
+##Challenge?## What's the difference between the outputs of these two?
 
 Those objects are pointers to the different element in the scraped page (`href` attributes) as
 defined by our XPath query. To get to the actual content of those elements (the text of the URLs),
@@ -610,17 +631,18 @@ we can use the `extract()` method. A variant of that method is `extract_first()`
 same thing as `extract()` but only returns the first element if there are more than one:
 
 ~~~
-In [2]: response.xpath("//tr[@class='rev--people--row']/td/h5/a/@href").extract_first()
+In [3]: response.xpath("//tr[@class='rev--people--row']/td/h5/a/@href").extract()
 ~~~
 {: .source}
 
 returns
 
 ~~~
-Out [2]: '/people/faculty/nicole-alea-albada'
-In [3]:
+Out [3]: '/people/faculty/nicole-alea-albada'
+In [4]:
 ~~~
 {: .output}
+
 
 > ## Dealing with relative URLs
 >
@@ -635,21 +657,21 @@ In [3]:
 > variable:
 >
 > ~~~
-> In [3]: testurl = response.xpath("//tr[@class='rev--people--row']/td/h5/a/@href").extract_first()
+> In [4]: testurl = response.xpath("//tr[@class='rev--people--row']/td/h5/a/@href").extract_first()
 > ~~~
 > {: .source}
 >
 > Then, we can try passing it on to the `urljoin()` method:
 >
 > ~~~
-> In [4]: response.urljoin(testurl)
+> In [5]: response.urljoin(testurl)
 > ~~~
 > {: .source}
 >
 > which returns
 >
 > ~~~
-> Out [4]:'https://www.psych.ucsb.edu/people/faculty/nicole-alea-albada'
+> Out [5]:'https://www.psych.ucsb.edu/people/faculty/nicole-alea-albada'
 > ~~~
 > {: .output}
 >
@@ -696,18 +718,18 @@ to get the "content" that the `selectors` are pointing to, the following methods
 Since we have an XPath query we know will extract the URLs we are looking for, we can now use
 the `xpath()` method and update the spider accordingly:
 
-(editing `ontariompps/ontariompps/spiders/mppaddresses.py`)
+(editing `carpwebscraping/carpwebscraping/spiders/psychfaculty.py`)
 
 ~~~
 import scrapy
 
-class MppaddressesSpider(scrapy.Spider):
-    name = "mppaddresses"
-    allowed_domains = ["www.ontla.on.ca"]
-    start\_urls = ['http://www.ontla.on.ca/web/members/members_current.do?locale=en/']
+class PsychfacultySpider(scrapy.Spider):
+    name = 'psychfaculty'
+    allowed_domains = ['www.psych.ucsb.edu']
+    start_urls = ['https://www.psych.ucsb.edu/people?people_type=6']
 
     def parse(self, response):
-        for url in response.xpath("//*[@class='mppcell']/a/@href").extract():
+        for url in response.xpath("//tr[@class='rev--people--row']/td/h5/a/@href").extract_first():
             print(response.urljoin(url))
 ~~~
 {: .source}
@@ -731,7 +753,7 @@ class MppaddressesSpider(scrapy.Spider):
 We can now run our new spider:
 
 ~~~
-scrapy crawl mppaddresses
+scrapy crawl pyschfaculty
 ~~~
 {: .source}
 
