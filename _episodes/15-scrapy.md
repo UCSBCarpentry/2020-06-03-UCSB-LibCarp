@@ -578,8 +578,8 @@ interactive python console because the prompt will have changed to `In [1]:`:
 [s]   fetch(req)                  Fetch a scrapy.Request and update local objects
 [s]   shelp()           Shell help (print this help)
 [s]   view(response)    View response in a browser
->>>
-
+2020-06-16 23:36:09 [asyncio] DEBUG: Using selector: EpollSelector
+In [1]:
 ~~~
 {: .output}
 
@@ -611,13 +611,13 @@ response.xpath("//a/@href")
 {: .source}
 
 ~~~
-**Out[2]:**
+Out[2]:
 (...)
 <Selector xpath='//a/@href' data='/people/faculty/nicole-alea-albada'>,
 <Selector xpath='//a/@href' data='/people/faculty/greg-ashby'>,
 <Selector xpath='//a/@href' data='/research/cognition-perception-and-co...'>,
 (...)
-**In[3]:**
+In[3]:
  ~~~
 {: .output}
 
@@ -646,8 +646,8 @@ response.xpath("//tr[@class='rev--people--row']/td/h5/a/@href").extract()
 returns
 
 ~~~
-**Out[3]:** '/people/faculty/nicole-alea-albada'
-**In [4]:**
+Out[3]: '/people/faculty/nicole-alea-albada'
+In [4]:
 ~~~
 {: .output}
 
