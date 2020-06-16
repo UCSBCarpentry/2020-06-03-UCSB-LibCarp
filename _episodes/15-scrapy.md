@@ -401,17 +401,17 @@ Let's change that by editing the spider as follows (note the contents of the `pa
 
 (editing `carpwebscraping/carpwebscraping/spiders/psychfaculty.py`)
 
-add:<br> 
+add:<br>
 <tt><mark>&nbsp;&nbsp;        with open("test.html", 'wb') as file:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;            file.write(response.body)</mark></tt>
 
 ~~~
 import scrapy
 
-class MppaddressesSpider(scrapy.Spider):
-    name = "mppaddresses"
-    allowed_domains = ["www.ontla.on.ca"]
-    start_urls = ['http://www.ontla.on.ca/web/members/members_current.do?locale=en/']
+class PsychfacultySpider(scrapy.Spider):
+    name = 'psychfaculty'
+    allowed_domains = ['www.psych.ucsb.edu']
+    start_urls = ['https://www.psych.ucsb.edu/people?people_type=6']
 
     def parse(self, response):
         with open("test.html", 'wb') as file:
@@ -522,15 +522,9 @@ try out in the browser console:
 >
 > A lengthier but more specific Xpath to select the elements we're interested can be found by right clicking the element in the inspector of the webpage you want and then choosing "copy full xpath".  (You might need to trim a number in square brackets at the end of the xpath to select more than a single element.) This results in the following XPath:
 >
-> ~~~
 > `/html/body/div[2]/div[2]/div/div[2]/div/section/div[2]/div/div[2]/div/div/table[2]/tbody/tr`
-> ~~~
-> {: .source}
-> However, as there is only one class assigned to the `tr` element we're interested in we can proceed with the shorter XPath.
 >
-> FIXME: keep this comment?
-> This [comment on StackOverflow](http://stackoverflow.com/a/9133579) has more details on
-> this issue.
+> However, as there is only one class assigned to the `tr` element we're interested in we can proceed with the shorter XPath.
 >
 {: .discussion}
 
@@ -593,18 +587,18 @@ We can now try running the XPath query we just devised against the `response` ob
 contains the downloaded web page:
 
 ~~~
- response.xpath("//tr[@class='rev--people--row']/td/h5/a/@href")
+In [1]: response.xpath("//tr[@class='rev--people--row']/td/h5/a/@href")
 ~~~
 {: .source}
 
 This will return a bunch of `Selector` objects (one for each URL found):
 
 ~~~
-**Out[1]:**
+Out[1]:
 [<Selector xpath="//tr[@class='rev--people--row']/td/h5/a/@href" data='/people/faculty/nicole-alea-albada'>,
 <Selector xpath="//tr[@class='rev--people--row']/td/h5/a/@href" data='/people/faculty/greg-ashby'>,
  ...]
-**In [2]:**
+In [2]:
 ~~~
 {: .output}
 
