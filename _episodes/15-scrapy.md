@@ -589,7 +589,7 @@ We can now try running the XPath query we just devised against the `response` ob
 contains the downloaded web page:
 
 ~~~
-**In [1]:** response.xpath("//tr[@class='rev--people--row']/td/h5/a/@href")
+ response.xpath("//tr[@class='rev--people--row']/td/h5/a/@href")
 ~~~
 {: .source}
 
