@@ -1344,7 +1344,35 @@ class PsychfacultySpider(scrapy.Spider):
 
 (we've removed the `[:5]` at the end of the for loop on line 16 of the above code)
 
-... and run our spider one last time:
+and below is code without comments to copy and paste into your own document:
+
+~~~
+# -*- coding: utf-8 -*-
+import scrapy
+from carpwebscraping.items import CarpwebscrapingItem
+
+class PsychfacultySpider(scrapy.Spider):
+    name = 'psychfaculty'
+    allowed_domains = ['www.psych.ucsb.edu']
+    start_urls = ['https://www.psych.ucsb.edu/people?people_type=6']
+
+    def parse(self, response):
+        for url in response.xpath("//tr[@class='rev--people--row']/td/h5/a/@href").extract():
+            yield scrapy.Request(response.urljoin(url), callback=self.biopage)
+
+    def biopage(self, response):
+        name = response.xpath('//*[@id="block-psych-content"]/div/header/div/h1/text()').extract_first().strip()
+        title = title = response.xpath('//*[@id="block-psych-content"]/div/section[2]/h4/text()').extract_first().strip()
+        email = response.xpath('//*[@id="block-psych-content"]/div/section[2]/div[1]/i/a/text()').extract_first().strip()
+        item = CarpwebscrapingItem()
+        item['name'] = name
+        item['title'] = title
+        item['email'] = email
+        yield item
+~~~
+{: .source}
+
+... and we run our spider one last time:
 
 ~~~
 scrapy crawl psychfaculty -o psychfaculty.csv
