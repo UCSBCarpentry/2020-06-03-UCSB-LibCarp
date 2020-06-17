@@ -985,7 +985,7 @@ to extract the following details:
 > > {: .output}
 > > As you can see there is only one position title for Nicole in the returned array.
 > >
-> > HINT: use strip() to remove the extra characters and whitespace from the strings (i.e. `\n`). In order to utilize strip() we can only use it with extract_first() instead of extract(). This is okay in our use case because there is only one email and title per faculty member.
+> > HINT: use `strip()`` to remove the extra characters and whitespace from the strings (i.e. `\n`). In order to utilize `strip()`` we have to use it with `extract_first()`` instead of `extract()``. This is okay in our use case because there is only one email and title per faculty member.
 > > ~~~
 > > In [2]: response.xpath('//*[@id="block-psych-content"]/div/section[2]/h4/text()').extract_first().strip()
 > > ~~~
