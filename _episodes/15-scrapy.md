@@ -301,8 +301,8 @@ has automatically generated.
 > >
 > > To answer the question, leaving `allowed_domains = ["https://www.psych.ucsb.edu/people?people_type=6"]`
 > > would restrict the spider to pages with URLs of the same pattern, and
-> > `http://www.ontla.on.ca/web/members/members_detail.do?locale=en&ID=7085`
-> > if of a different pattern, so Scrapy would prevent the spider from scraping it.
+> > `https://www.psych.ucsb.edu/people/faculty/nicole-alea-albada`
+> > is of a different pattern, so Scrapy would prevent the spider from scraping it which is not what we want.
 > >
 > {: .solution}
 >
@@ -654,7 +654,7 @@ In [4]:
 > Looking at this result and at the source code of the page, we realize that the URLs are all
 > _relative_ to that page. They are all missing part of the URL to become _absolute_ URLs, which
 > we will need if we want to ask our spider to visit those URLs to scrape more data. We could
-> prefix all those URLs with `http://www.ontla.on.ca/web/members/` to make them absolute, but
+> prefix all those URLs with `https://www.psych.ucsb.edu/people/faculty/` to make them absolute, but
 > since this is a common occurence when scraping web pages, Scrapy provides a built-in function
 > to deal with this issue.
 >
