@@ -972,33 +972,47 @@ to extract the following details:
 > > ## Solution
 > >
 > > This returns an array of position titles (using the Scrapy shell):
-> > ##FIXME resume editing here
+> >
 > > ~~~
-> > scrapy shell "http://www.ontla.on.ca/web/members/members_detail.do?locale=en&ID=7085"
-> > >>> response.xpath("//div[@class='phone']/text()").extract()
+> > scrapy shell https://www.psych.ucsb.edu/people/faculty/nicole-alea-albada
+> > In [1]: response.xpath('//*[@id="block-psych-content"]/div/section[2]/h4/text()').extract()
 > > ~~~
 > > {: .source}
 > >
 > > ~~~
-> > [['\n416-325-6200\n', '\n416-325-6195\n', '\n416-243-7984\n', '\n416-243-0327\n']
+> > Out[1]: ['\n      Assistant Teaching Professor']
 > > ~~~
 > > {: .output}
+> > As you can see there is only one position title for Nicole in the returned array.
 > >
-> > And this returns an array of email addresses:
+> > ##Hint##
 > >
-> > ~~~
-> > >>> response.xpath("//div[@class='email']/a/text()").extract()
+> > use strip() to remove the extra characters from the array (i.e. `\n`).
+> > In our case we must then also use extract_first() instead of extract(). This is okay because there is only one email and title per faculty member.
+> >
+> >In [2]: response.xpath('//*[@id="block-psych-content"]/div/section[2]/h4/text()').extract_first().strip()
 > > ~~~
 > > {: .source}
 > >
 > > ~~~
-> > ['\nlalbanese.mpp@liberal.ola.org\n', '\nlalbanese.mpp.co@liberal.ola.org\n']
+> > Out[2]: 'Assistant Teaching Professor'
 > > ~~~
 > > {: .output}
+> > And this returns Nicole's email address:
+> > ~~~
+> > >>> response.xpath('//*[@id="block-psych-content"]/div/section[2]/div[1]/i/a/text()').extract_first().strip()
+> > ~~~
+> > {: .source}
 > >
+> > ~~~
+> > 'nicole.albada@psych.ucsb.edu'
+> > ~~~
+> > {: .output}
 > {: .solution}
 >
 {: .challenge}
+
+
 
 > ## Scraping using Regular Expressions
 > In combination with XPath queries, it is also possible to use [Regular Expressions](https://en.wikipedia.org/wiki/Regular_expression)
@@ -1028,7 +1042,7 @@ to extract the following details:
 > >
 > > ~~~
 > > scrapy shell "http://www.ontla.on.ca/web/members/members_detail.do?locale=en&ID=7085"
-> > >>> response.xpath('//body').re(r'\d{3}-\d{3}-\d{4}')
+> > In [1]: response.xpath('//body').re(r'\d{3}-\d{3}-\d{4}')
 > > ~~~
 > > {: .source}
 > >
