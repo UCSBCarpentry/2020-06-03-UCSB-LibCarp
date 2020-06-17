@@ -946,12 +946,12 @@ Now that we are able to visit each one of the detail pages, we should work on ge
 data that we want out of them. In our example, we are primarily looking
 to extract the following details:
 
-* Position title
+* Name
 * Email address
 
 
-> ## Scrape position title and email address
-> Write XPath queries to scrape the first phone number and the first email address
+> ## Challenge: Scrape name and email address
+> Write XPath queries to scrape the faculty member's name and email address
 > displayed on each of the detail pages that are linked from
 > the [UCSB psychology faculty page](https://www.psych.ucsb.edu/people?people_type=6).
 >
@@ -962,36 +962,36 @@ to extract the following details:
 >
 > * Look at the source code and try out XPath your queries until you find what
 >   you are looking for.
-> * You can either use the browser console or the Scrapy shell mode (see above)
->   to try out your queries.
+> * You can use the browser console to try out your queries, but always confirm
+>   using the Scrapy shell mode (see above).
 > * The syntax for selecting an element like `<div class="mytarget">` is `div[@class = 'mytarget']`.
 > * The syntax to select the value of an attribute of the type `<element attribute="value">`
 >   is `element/@attribute`.
 >
 > > ## Solution
 > >
-> > This returns an array of position titles (using the Scrapy shell):
+> > This is one way of returning the faculty member name (using the Scrapy shell):
 > >
 > > ~~~
 > > scrapy shell https://www.psych.ucsb.edu/people/faculty/nicole-alea-albada
-> > In [1]: response.xpath('//*[@id="block-psych-content"]/div/section[2]/h4/text()').extract()
+> > In [1]: response.xpath('//*[@id="block-psych-content"]/div/header/div/h1/text()').extract()
 > > ~~~
 > > {: .source}
 > >
 > > ~~~
-> > Out[1]: ['\n      Assistant Teaching Professor']
+> > Out[1]: ['\n  Nicole Alea Albada\n']
 > > ~~~
 > > {: .output}
 > > As you can see there is only one position title for Nicole in the returned array.
 > >
-> > HINT: use `strip()`` to remove the extra characters and whitespace from the strings (i.e. `\n`). In order to utilize `strip()`` we have to use it with `extract_first()`` instead of `extract()``. This is okay in our use case because there is only one email and title per faculty member.
+> > HINT: use `strip()` to remove the extra characters and whitespace from the strings (i.e. `\n`). In order to utilize `strip()`` we have to use it with `extract_first()`` instead of `extract()``. This is okay in our use case because there is only one email and title per faculty member.
 > > ~~~
 > > In [2]: response.xpath('//*[@id="block-psych-content"]/div/section[2]/h4/text()').extract_first().strip()
 > > ~~~
 > > {: .source}
 > >
 > > ~~~
-> > Out[2]: 'Assistant Teaching Professor'
+> > Out[2]: 'Nicole Alea Albada'
 > > ~~~
 > > {: .output}
 > >
@@ -1022,31 +1022,31 @@ to extract the following details:
 > and returns an array of unicode strings (it is therefore not necessary to
 > use `extract()` on its results).
 >
-> Using the Scrapy shell, try writing a query that selects all phone numbers found on
-> a politician's detail page regardless of where they are located, using Regular Expressions.
+> Using the Scrapy shell, try writing a query that selects the room number found on
+> the faculty member's detail page regardless of where they are located, using Regular Expressions.
 >
 > You might find the [Regex 101](https://regex101.com/) interactive Regular Expressions
 > tester useful to get to the proper syntax.
 >
 > Tips:
 >
-> * We are looking for phone numbers following the North American syntax: ###-###-####
+> * We are looking for a string of the form: Room NNNN
 > * `re()` expects a regular expression string which should be prefixed by `r` as in `re(r'Name:\s*(.*)')`.
 > * Remember that `re()` is run on a `selector` object, so you can't do `response.re(r'...')`. Instead you may
 >   want to try doing something like `response.xpath('//body').re(r'...')`.
 >
 > > ## Solution
 > >
-> > This returns an array of phone (and fax) numbers (using the Scrapy shell):
+> > This returns the room number (using the Scrapy shell):
 > >
 > > ~~~
-> > scrapy shell "http://www.ontla.on.ca/web/members/members_detail.do?locale=en&ID=7085"
-> > In [1]: response.xpath('//body').re(r'\d{3}-\d{3}-\d{4}')
+> > scrapy shell https://www.psych.ucsb.edu/people/faculty/nicole-alea-albada
+> > In [1]: response.xpath('//body').re(r'Room (\d+)')
 > > ~~~
 > > {: .source}
 > >
 > > ~~~
-> > ['416-325-6200', '416-325-6195', '416-243-7984', '416-243-0327']
+> > ['3839']
 > > ~~~
 > > {: .output}
 > >
