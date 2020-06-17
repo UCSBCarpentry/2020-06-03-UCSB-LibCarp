@@ -54,7 +54,7 @@ You should see the following login page:
 
 Spawn failed error, restart page:
 <p align='center'>
-    <img alt="spawn failed" src="../fig/Jupyterlab_login.PNG" width="750"/>
+    <img alt="spawn failed" src="../fig/JupterLab_spawnfailed.PNG" width="750"/>
 </p>
 
 Internal Server Error, click `home page`:
