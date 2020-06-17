@@ -114,60 +114,30 @@ Drag a tab to the center of a tab panel to move the tab to the panel. Subdivide 
 dragging a tab to the left, right, top, or bottom of the panel. The work area has a single current
 activity. The tab for the current activity is marked with a colored top border (blue by default).
 
+<p align='center'>
+   <img alt="Multi-panel JupyterLab" src="../fig/0_multipanel_jupyterlab_screenshot.png" width="750"/>
+</p>
+
+## Open the Launcher to start the terminal
+
+The `+` at the top left of the page allows you to open a new Launcher. There are options to use a Notebook, Console, or 'Other'. All represent different environments in which we can run code. The choice of which environment to use depends on personal preference or the kind of task you are working on. We will be choosing the terminal option under 'Other' today since we've been working with the terminal for Bash. Scrapy is also difficult to run from the Jupyter Notebook option.
+
+## Creating a new directory
+*  In the top menu bar of the sidebar next to the `+` to open the Launcher there is a 'new folder' button. Click to create a new folder.
+*  
 ## Creating a Python script
 
-*   To start writing a new Python program click the Text File icon under the *Other* header in the Launcher tab of the Main Work Area.
-    *   You can also create a new plain text file by selecting the *New -> Text File* from the *File* menu in the Menu Bar.
+There are a number of ways to start writing Python scripts (similar to writing Bash scripts).
+*   One way to start writing a new Python program click the Text File icon under the *Other* header in the Launcher tab of the Main Work Area.
+*   You can also create a new plain text file by selecting the *New -> Text File* from the *File* menu in the Menu Bar.
+*   You can use the terminal to `touch` or `nano` to create a new file
 *   To convert this plain text file to a Python program, select the *Save File As* action from the *File* menu in the Menu Bar and give your new text file a name that ends with the `.py` extension.
     *   The `.py` extension lets everyone (including the operating system) know that this text file is a Python program.
     *   This is convention, not a requirement.
 
-## Creating a Jupyter Notebook
+***Note** you will not need to create new folders and files within a Scrapy project. Scrapy automatically generates files and folders so all you have to do is edit them to match the parameters of the website you are crawling.
 
-To open a new notebook click the Python 3 icon under the *Notebook* header in the Launcher tab in
-the main work area. You can also create a new notebook by selecting *New -> Notebook* from the *File* menu in the Menu Bar.
 
-Additional notes on Jupyter notebooks.
-
-  *   Notebook files have the extension `.ipynb` to distinguish them from plain-text Python programs.
-  *   Notebooks can be exported as Python scripts that can be run from the command line.
-
-Below is a screenshot of a Jupyter notebook running inside JupyterLab. If you are interested in
-more details, then see the [official notebook documentation][jupyterlab-notebook-docs].
-
-<p align='center'>
-    <img alt="Example Jupyter Notebook" src="../fig/0_jupyterlab_notebook_screenshot.png" width="750"/>
-</p>
-
-> ## How It's Stored
->
-> *   The notebook file is stored in a format called JSON.
-> *   Just like a webpage, what's saved looks different from what you see in your browser.
-> *   But this format allows Jupyter to mix source code, text, and images, all in one file.
-{: .callout}
-
-> ## Arranging Documents into Panels of Tabs
->
-> In the JupyterLab Main Work Area you can arrange documents into panels of tabs. Here is an
-> example from the [official documentation][jupyterlab].
->
-> <p align='center'>
->    <img alt="Multi-panel JupyterLab" src="../fig/0_multipanel_jupyterlab_screenshot.png" width="750"/>
-> </p>
->
-> First, create a text file, Python console, and terminal window and arrange then into three
-> panels in the main work area. Next, create a notebook, terminal window, and text file and
-> arrange then into three panels in the main work area. Finally, create your own combination of
-> panels and tabs. What combination of panels and tabs do you think will be most useful for your
-> workflow?
->
-> > ## Solution
-> >
-> > After creating the necessary tabs, you can drag one of the tabs to the center of a panel to
-> > move the tab to the panel; next you can subdivide a tab panel by dragging a tab to the left,
-> > right, top, or bottom of the panel.
-> {: .solution}
-{: .challenge}
 
 ## Use the Jupyter Notebook for editing and running Python.
 
