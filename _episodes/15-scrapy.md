@@ -77,10 +77,9 @@ Scrapy 2.1.0
 If you have a newer version, you should be fine as well.
 
 To introduce the use of Scrapy, we will reuse the same example we used in the previous
-section. We will start by scraping a list of URLs from [the list of members of the Ontario Legislative
-Assembly](http://www.ontla.on.ca/web/members/members_current.do?locale=en) and then visit those URLs to
-scrape [detailed information](http://www.ontla.on.ca/web/members/members_detail.do?locale=en&ID=7085)
-about those ministers.
+section. We will start by scraping a list of URLs from [the list of faculty of the Psychological & Brain Sciences](https://www.psych.ucsb.edu/people?people_type=6) and then visit those URLs to
+scrape [detailed information](https://www.psych.ucsb.edu/people/faculty/tamsin-german)
+about those faculty members.
 
 ## Setup a new Scrapy project
 
