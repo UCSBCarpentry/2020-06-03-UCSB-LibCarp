@@ -985,12 +985,9 @@ to extract the following details:
 > > {: .output}
 > > As you can see there is only one position title for Nicole in the returned array.
 > >
-> > ##Hint##
-> >
-> > use strip() to remove the extra characters from the array (i.e. `\n`).
-> > In our case we must then also use extract_first() instead of extract(). This is okay because there is only one email and title per faculty member.
-> >
-> >In [2]: response.xpath('//*[@id="block-psych-content"]/div/section[2]/h4/text()').extract_first().strip()
+> > HINT: use strip() to remove the extra characters and whitespace from the strings (i.e. `\n`). In order to utilize strip() we can only use it with extract_first() instead of extract(). This is okay in our use case because there is only one email and title per faculty member.
+> > ~~~
+> > In [2]: response.xpath('//*[@id="block-psych-content"]/div/section[2]/h4/text()').extract_first().strip()
 > > ~~~
 > > {: .source}
 > >
@@ -998,9 +995,11 @@ to extract the following details:
 > > Out[2]: 'Assistant Teaching Professor'
 > > ~~~
 > > {: .output}
+> >
 > > And this returns Nicole's email address:
+> >
 > > ~~~
-> > >>> response.xpath('//*[@id="block-psych-content"]/div/section[2]/div[1]/i/a/text()').extract_first().strip()
+> > In [3]: response.xpath('//*[@id="block-psych-content"]/div/section[2]/div[1]/i/a/text()').extract_first().strip()
 > > ~~~
 > > {: .source}
 > >
@@ -1008,6 +1007,7 @@ to extract the following details:
 > > 'nicole.albada@psych.ucsb.edu'
 > > ~~~
 > > {: .output}
+> >
 > {: .solution}
 >
 {: .challenge}
