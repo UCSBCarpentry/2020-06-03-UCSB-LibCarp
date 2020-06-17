@@ -212,7 +212,7 @@ We just need to replace `<SCRAPER NAME>` with the name we want to give our spide
 the URL we want to spider to crawl. In our case, we can type:
 
 ~~~
-scrapy genspider psychfaculty www.psych.ucsb.edu/people?people_type=6
+scrapy genspider psychfaculty 'www.psych.ucsb.edu/people?people_type=6'
 ~~~
 {: .source}
 
