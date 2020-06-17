@@ -1109,13 +1109,13 @@ produces something like
 ~~~
 2020-06-17 13:46:59 [scrapy.utils.log] INFO: Scrapy 2.1.0 started (bot: carpwebscraping)
 (...)
-Found details: Nicole Alea Albada, Assistant Teaching Professor, nicole.albada@psych.ucsb.edu
+Found details: Nicole Alea Albada, nicole.albada@psych.ucsb.edu
 2020-06-17 13:55:10 [scrapy.core.engine] DEBUG: Crawled (200) <GET https://www.psych.ucsb.edu/people/faculty/nancy-collins> (referer: https://www.psych.ucsb.edu/people?people_type=6)
 2020-06-17 13:55:10 [scrapy.core.engine] DEBUG: Crawled (200) <GET https://www.psych.ucsb.edu/people/faculty/jim-blascovich> (referer: https://www.psych.ucsb.edu/people?people_type=6)
-Found details: Greg Ashby, Distinguished Professor, greg.ashby@psych.ucsb.edu
-Found details: Michael Beyeler, Assistant Professor, michael.beyeler@psych.ucsb.edu
-Found details: Nancy Collins, Professor, nancy.collins@psych.ucsb.edu
-Found details: Jim Blascovich, Distinguished Professor Emeritus/Research Professor, jim.blascovich@psych.ucsb.edu
+Found details: Greg Ashby, greg.ashby@psych.ucsb.edu
+Found details: Michael Beyeler, michael.beyeler@psych.ucsb.edu
+Found details: Nancy Collins, nancy.collins@psych.ucsb.edu
+Found details: Jim Blascovich, jim.blascovich@psych.ucsb.edu
 (...)
 2020-06-17 13:55:11 [scrapy.core.engine] INFO: Spider closed (finished)
 ~~~
@@ -1160,7 +1160,6 @@ import scrapy
 class OntariomppsItem(scrapy.Item):
     # define the fields for your item here like:
     name = scrapy.Field()
-    title = scrapy.Field()
     email = scrapy.Field()
 ~~~
 {: .source}
@@ -1203,14 +1202,12 @@ class PsychfacultySpider(scrapy.Spider):
 
       # Store desired scraped data into variables:
         name = response.xpath('//*[@id="block-psych-content"]/div/header/div/h1/text()').extract_first().strip()
-        title = response.xpath('//*[@id="block-psych-content"]/div/section[2]/h4/text()').extract_first().strip()
         email = response.xpath('//*[@id="block-psych-content"]/div/section[2]/div[1]/i/a/text()').extract_first().strip()
         print("Found details: " + name + ", " + title + ", " + email) #print for debugging
 
         item = CarpwebscrapingItem() # Creating a new Item object
         # Store scraped data into that item:
         item['name'] = name
-        item['title'] = title
         item['email'] = email
         # Return that item to the main spider method:
         yield item
@@ -1241,8 +1238,7 @@ we see something like
 2020-06-17 14:16:19 [scrapy.core.engine] DEBUG: Crawled (200) <GET https://www.psych.ucsb.edu/people/faculty/heejung-kim> (referer: https://www.psych.ucsb.edu/people?people_type=6)
 2020-06-17 14:16:19 [scrapy.core.scraper] DEBUG: Scraped from <200 https://www.psych.ucsb.edu/people/faculty/nicole-alea-albada>
 {'email': 'nicole.albada@psych.ucsb.edu',
- 'name': 'Nicole Alea Albada',
- 'title': 'Assistant Teaching Professor'}
+ 'name': 'Nicole Alea Albada'}
 (...)
 2020-06-17 14:16:19 [scrapy.core.engine] INFO: Spider closed (finished)
 ~~~
@@ -1273,14 +1269,14 @@ cat output.csv
 Returns
 
 ~~~
-email,name,title
-nicole.albada@psych.ucsb.edu,Nicole Alea Albada,Assistant Teaching Professor
-michael.goard@psych.ucsb.edu,Michael Goard,Assistant Professor
-emily.jacobs@psych.ucsb.edu,Emily Jacobs,Assistant Professor
-janusonis@ucsb.edu,Skirmantas Janusonis,Associate Professor
-jerry.jacobs@psych.ucsb.edu,Jerry Jacobs,"Research Professor, Distinguished Professor Emeritus"
-scott.grafton@psych.ucsb.edu,Scott Grafton,Distinguished Professor
-david.hamilton@psych.ucsb.edu,David Hamilton,Distinguished Professor Emeritus / Research Professor
+email,name
+nicole.albada@psych.ucsb.edu,Nicole Alea Albada,Assistant
+michael.goard@psych.ucsb.edu,Michael Goard,Assistant
+emily.jacobs@psych.ucsb.edu,Emily Jacobs,Assistant
+janusonis@ucsb.edu,Skirmantas Janusonis,Associate
+jerry.jacobs@psych.ucsb.edu,Jerry Jacobs,
+scott.grafton@psych.ucsb.edu,Scott Grafton,Distinguished
+david.hamilton@psych.ucsb.edu,David Hamilton,Distinguished
 ~~~
 {: .output}
 
@@ -1328,14 +1324,12 @@ class PsychfacultySpider(scrapy.Spider):
 
         # Store desired scraped data into variables:
         name = response.xpath('//*[@id="block-psych-content"]/div/header/div/h1/text()').extract_first().strip()
-        title = response.xpath('//*[@id="block-psych-content"]/div/section[2]/h4/text()').extract_first().strip()
         email = response.xpath('//*[@id="block-psych-content"]/div/section[2]/div[1]/i/a/text()').extract_first().strip()
         print("Found details: " + name + ", " + title + ", " + email) #print for debugging
 
         item = CarpwebscrapingItem() # Creating a new Item object
         # Store scraped data into that item:
         item['name'] = name
-        item['title'] = title
         item['email'] = email
         # Return that item to the main spider method:
         yield item
@@ -1362,11 +1356,9 @@ class PsychfacultySpider(scrapy.Spider):
 
     def biopage(self, response):
         name = response.xpath('//*[@id="block-psych-content"]/div/header/div/h1/text()').extract_first().strip()
-        title = title = response.xpath('//*[@id="block-psych-content"]/div/section[2]/h4/text()').extract_first().strip()
         email = response.xpath('//*[@id="block-psych-content"]/div/section[2]/div[1]/i/a/text()').extract_first().strip()
         item = CarpwebscrapingItem()
         item['name'] = name
-        item['title'] = title
         item['email'] = email
         yield item
 ~~~
