@@ -1197,19 +1197,18 @@ class PsychfacultySpider(scrapy.Spider):
             # URL:
             yield scrapy.Request(full_url, callback=self.biopage)
 
-    def biogpage(self, response):
-        # This method is called on by the 'parse' method above. It scrapes the URLs
-        # that have been extracted in the previous step.
+      def biogpage(self, response):
+      # This method is called on by the 'parse' method above. It scrapes the URLs
+      # that have been extracted in the previous step.
 
-        item = CarpwebscrapingItem() # Creating a new Item object
-        # Store scraped data into that item:
+      # Store desired scraped data into variables:
         name = response.xpath('//*[@id="block-psych-content"]/div/header/div/h1/text()').extract_first().strip()
         title = response.xpath('//*[@id="block-psych-content"]/div/section[2]/h4/text()').extract_first().strip()
         email = response.xpath('//*[@id="block-psych-content"]/div/section[2]/div[1]/i/a/text()').extract_first().strip()
-        print("Found details: " + name + ", " + title + ", " + email)
+        print("Found details: " + name + ", " + title + ", " + email) #print for debugging
 
-        # turn the defined variables above into Scrapy Items via the CarpwebscrapingItem() method
-        item = CarpwebscrapingItem()
+        item = CarpwebscrapingItem() # Creating a new Item object
+        # Store scraped data into that item:
         item['name'] = name
         item['title'] = title
         item['email'] = email
@@ -1327,15 +1326,14 @@ class PsychfacultySpider(scrapy.Spider):
         # This method is called on by the 'parse' method above. It scrapes the URLs
         # that have been extracted in the previous step.
 
-        item = CarpwebscrapingItem() # Creating a new Item object
-        # Store scraped data into that item:
+        # Store desired scraped data into variables:
         name = response.xpath('//*[@id="block-psych-content"]/div/header/div/h1/text()').extract_first().strip()
         title = response.xpath('//*[@id="block-psych-content"]/div/section[2]/h4/text()').extract_first().strip()
         email = response.xpath('//*[@id="block-psych-content"]/div/section[2]/div[1]/i/a/text()').extract_first().strip()
-        print("Found details: " + name + ", " + title + ", " + email)
+        print("Found details: " + name + ", " + title + ", " + email) #print for debugging
 
-        # turn the defined variables above into Scrapy Items via the CarpwebscrapingItem() method
-        item = CarpwebscrapingItem()
+        item = CarpwebscrapingItem() # Creating a new Item object
+        # Store scraped data into that item:
         item['name'] = name
         item['title'] = title
         item['email'] = email
