@@ -1270,13 +1270,13 @@ Returns
 
 ~~~
 email,name
-nicole.albada@psych.ucsb.edu,Nicole Alea Albada,Assistant
-michael.goard@psych.ucsb.edu,Michael Goard,Assistant
-emily.jacobs@psych.ucsb.edu,Emily Jacobs,Assistant
-janusonis@ucsb.edu,Skirmantas Janusonis,Associate
-jerry.jacobs@psych.ucsb.edu,Jerry Jacobs,
-scott.grafton@psych.ucsb.edu,Scott Grafton,Distinguished
-david.hamilton@psych.ucsb.edu,David Hamilton,Distinguished
+nicole.albada@psych.ucsb.edu,Nicole Alea Albada
+michael.goard@psych.ucsb.edu,Michael Goard
+emily.jacobs@psych.ucsb.edu,Emily Jacobs
+janusonis@ucsb.edu,Skirmantas Janusonis
+jerry.jacobs@psych.ucsb.edu,Jerry Jacobs
+scott.grafton@psych.ucsb.edu,Scott Grafton
+david.hamilton@psych.ucsb.edu,David Hamilton
 ~~~
 {: .output}
 
