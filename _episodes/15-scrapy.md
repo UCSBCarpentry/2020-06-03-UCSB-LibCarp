@@ -1055,7 +1055,7 @@ to extract the following details:
 >
 {: .challenge}
 
-
+##FIXME## continue editing here
 Once we have found XPath queries to run on the detail pages and are happy with the result,
 we can add them to the `get_details()` method of our spider:
 
