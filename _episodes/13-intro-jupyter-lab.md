@@ -1,5 +1,5 @@
 ---
-title: "Running and Quitting"
+title: "Using JupyterLab"
 teaching: 15
 exercises: 0
 questions:
@@ -20,7 +20,6 @@ keypoints:
 - "The Notebook will turn Markdown into pretty-printed documentation."
 - "Markdown does most of what HTML does."
 ---
-FIXME: explanation between notebooks/console/terminal?
 FIXME: add starting terminal instance in JupyterLab
 FIXME: add navigating folders in jupyterlab terminal
 FIXME: add editing files in terminal (review of nano editor)?
@@ -29,16 +28,16 @@ FIXME: add editing files in terminal (review of nano editor)?
 ## Getting Started with JupyterLab
 
 While many software developers will often use an integrated development environment (IDE) or a
-text editor to create and edit their Python programs we will be using [JupyterLab][jupyterlab]
+text editor to create and edit their Python programs we will be using [JupyterLab](https://jupyterlab.readthedocs.io/en/latest/)
 during this lesson.
 
-JupyterLab is an application with a web-based user interface from [Project Jupyter][jupyter] that
+JupyterLab is an application with a web-based user interface from [Project Jupyter](https://jupyter.org/about) that
 enables one to work with documents and activities such as Jupyter notebooks, text editors, terminals,
 and even custom components in a flexible, integrated, and extensible manner. JupyterLab requires a
 reasonably up-to-date browser (ideally a current version of Chrome, Safari, or Firefox); Internet
 Explorer versions 9 and below are *not* supported.
 
-We will access JupyterLab through a cloud-based server called JupyterHub (through the organization Unidata), which will cut down on the technical problems you may face while installing JupyterLab on your computer. However, JupyterLab is included as part of the Anaconda Python distribution which is a free program for running python-language code (similar to how bash and zsh are programs that run the bash programming language). Instructions on installing and running Anaconda/JupyterLab on your personal computer will be included at the end of the episode.
+We will access JupyterLab through a cloud-based server called JupyterHub (our instance was made for us by the organization [Unidata](https://www.unidata.ucar.edu/)), which will cut down on the technical problems you may face while installing JupyterLab on your computer. However, JupyterLab is also included as part of the Anaconda Python distribution which is a free program for running python-language code (similar to how bash and zsh are programs that run the bash programming language). Instructions on installing and running Anaconda/JupyterLab on your personal computer can be found on the [setup page].
 
 
 > ## JupyterLab? What about Jupyter notebooks?
@@ -54,7 +53,13 @@ We will access JupyterLab through a cloud-based server called JupyterHub (throug
 
 ## Starting JupyterLab from JupyterHub
 ### Logging in to JupyterHub
-FIXME: add login information
+The website address for our JupyterHub is https://js-171-170.jetstream-cloud.org/. Please log in to JupyterHub using the username you choose from the previously shared Google sheet. The passwords for the accounts are also found on that google sheet.
+
+**NOTE** While it takes a bit to load, sometimes you will encounter a 500 internal error. Please click the "home page" link. This will give you a "start server" button. Click the start server button and your JupyterHub should load properly.
+
+<p align='center'>
+    <img alt="JupyterLab 500 Internal Server Error" src="../fig/JupyterHub500error.png" width="750"/>
+</p>
 
 ## The JupyterLab Interface
 
