@@ -1054,70 +1054,70 @@ to extract the following details:
 >
 {: .challenge}
 
-##FIXME## continue editing here
-Once we have found XPath queries to run on the detail pages and are happy with the result,
-we can add them to the `get_details()` method of our spider:
+
+Once we have found XPath queries to run on the detail pages and are happy with the result (we'll take the name query from our previous challenge),
+we can add them to the `biopage()` method of our spider:
 
 
-(editing `ontariompps/ontariompps/spiders/mppaddresses.py`)
+(editing `carpwebscraping/carpwebscraping/spiders/psychfaculty.py`)
 
 ~~~
 import scrapy
 
-class MppaddressesSpider(scrapy.Spider):
-    name = "mppaddresses" # The name of this spider
+class PsychfacultySpider(scrapy.Spider):
+    name = 'psychfaculty' # The name of this spider
 
     # The allowed domain and the URLs where the spider should start crawling:
-    allowed_domains = ["www.ontla.on.ca"]
-    start_urls = ['http://www.ontla.on.ca/web/members/members_current.do?locale=en/']
+    allowed_domains = ['www.psych.ucsb.edu']
+    start_urls = ['https://www.psych.ucsb.edu/people?people_type=6']
 
     def parse(self, response):
         # The main method of the spider. It scrapes the URL(s) specified in the
         # 'start_url' argument above. The content of the scraped URL is passed on
         # as the 'response' object.
 
-        for url in response.xpath("//*[@class='mppcell']/a/@href").extract()[:5]:
-            # This loops through all the URLs found inside an element of class 'mppcell'
+      for url in response.xpath("//tr[@class='rev--people--row']/td/h5/a/@href").extract()[:5]:
+            # This loops through all the URLs found inside an element of class 'rev--people--row'
 
             # Constructs an absolute URL by combining the response’s URL with a possible relative URL:
             full_url = response.urljoin(url)
             print("Found URL: "+full_url)
 
             # The following tells Scrapy to scrape the URL in the 'full_url' variable
-            # and calls the 'get_details() method below with the content of this
+            # and calls the 'biopage() method below with the content of this
             # URL:
-            yield scrapy.Request(full_url, callback=self.get_details)
+            yield scrapy.Request(full_url, callback=self.biopage)
 
-    def get_details(self, response):
+    def biogpage(self, response):
         # This method is called on by the 'parse' method above. It scrapes the URLs
         # that have been extracted in the previous step.
-        name_detail = response.xpath("normalize-space(//div[@class='mppdetails']/h1/text())").extract_first()
-        phone_detail = response.xpath("normalize-space(//div[@class='phone']/text())").extract_first()
-        email_detail = response.xpath("normalize-space(//div[@class='email']/a/text())").extract_first()
-        print("Found details: " + name_detail + ', ' + phone_detail + ', ' + email_detail)
+        name = response.xpath('//*[@id="block-psych-content"]/div/header/div/h1/text()').extract()
+        email = response.xpath('//*[@id="block-psych-content"]/div/section[2]/div[1]/i/a/text()').extract()
+        print("Found details: " + name + ', ' + email)
 ~~~
 {: .source}
 
 Running our scraper again
 
 ~~~
-scrapy crawl mppaddresses
+scrapy crawl psychfaculty
 ~~~
 {: .source}
 
 produces something like
 
 ~~~
-2017-02-27 20:39:42 [scrapy.utils.log] INFO: Scrapy 1.3.2 started (bot: ontariompps)
+2020-06-17 13:46:59 [scrapy.utils.log] INFO: Scrapy 2.1.0 started (bot: carpwebscraping)
 (...)
-2017-02-27 20:39:43 [scrapy.core.engine] DEBUG: Crawled (200) <GET http://www.ontla.on.ca/web/members/members_current.do?locale=en/> (referer: None)
-Found URL: http://www.ontla.on.ca/web/members/members_detail.do?locale=en&ID=7085
-Found URL: http://www.ontla.on.ca/web/members/members_detail.do?locale=en&ID=7275
+Found details: Nicole Alea Albada, Assistant Teaching Professor, nicole.albada@psych.ucsb.edu
+2020-06-17 13:55:10 [scrapy.core.engine] DEBUG: Crawled (200) <GET https://www.psych.ucsb.edu/people/faculty/nancy-collins> (referer: https://www.psych.ucsb.edu/people?people_type=6)
+2020-06-17 13:55:10 [scrapy.core.engine] DEBUG: Crawled (200) <GET https://www.psych.ucsb.edu/people/faculty/jim-blascovich> (referer: https://www.psych.ucsb.edu/people?people_type=6)
+Found details: Greg Ashby, Distinguished Professor, greg.ashby@psych.ucsb.edu
+Found details: Michael Beyeler, Assistant Professor, michael.beyeler@psych.ucsb.edu
+Found details: Nancy Collins, Professor, nancy.collins@psych.ucsb.edu
+Found details: Jim Blascovich, Distinguished Professor Emeritus/Research Professor, jim.blascovich@psych.ucsb.edu
 (...)
-Found details: Ted Arnott, MPP (Wellington—Halton Hills), 416-325-3880, ted.arnott@pc.ola.org
-Found details: Teresa J. Armstrong, MPP (London—Fanshawe), 416-325-1872, tarmstrong-qp@ndp.on.ca
-(...)
-2017-02-27 20:39:44 [scrapy.core.engine] INFO: Closing spider (finished)
+2020-06-17 13:55:11 [scrapy.core.engine] INFO: Spider closed (finished)
 ~~~
 {: .output}
 
@@ -1135,16 +1135,16 @@ each item are columns.
 
 Before we can begin using Items, we need to define their structure. Using our editor,
 let's navigate and edit the following file that Scrapy has created for us when we
-first created our project: `ontariompps/ontariompps/items.py`
+first created our project: `carpwebscraping/carpwebscraping/items.py`
 
-Scrapy has pre-populated this file with an empty "OntariomppsItem" class:
+Scrapy has pre-populated this file with an empty "CarpwebscrapingItem" class:
 
-(editing `ontariompps/ontariompps/items.py`)
+(editing `carpwebscraping/carpwebscraping/items.py`)
 
 ~~~
 import scrapy
 
-class OntariomppsItem(scrapy.Item):
+class CarpwebscrapingItem(scrapy.Item):
     # define the fields for your item here like:
     # name = scrapy.Field()
     pass
@@ -1160,53 +1160,58 @@ import scrapy
 class OntariomppsItem(scrapy.Item):
     # define the fields for your item here like:
     name = scrapy.Field()
-    phone = scrapy.Field()
+    title = scrapy.Field()
     email = scrapy.Field()
 ~~~
 {: .source}
 
 Then save this file. We can then edit our spider one more time:
 
-(editing `ontariompps/ontariompps/spiders/mppaddresses.py`)
+(editing `carpwebscraping/carpwebscraping/spiders/psychfaculty.py`)
 
 ~~~
 import scrapy
-from ontariompps.items import OntariomppsItem # We need this so that Python knows about the item object
+from carpwebscraping.items import CarpwebscrapingItem # We need this so that Python knows about the item object
 
-class MppaddressesSpider(scrapy.Spider):
-    name = "mppaddresses" # The name of this spider
+class PsychfacultySpider(scrapy.Spider):
+    name = 'psychfaculty' # The name of this spider
 
     # The allowed domain and the URLs where the spider should start crawling:
-    allowed_domains = ["www.ontla.on.ca"]
-    start_urls = ['http://www.ontla.on.ca/web/members/members_current.do?locale=en/']
+    allowed_domains = ['www.psych.ucsb.edu']
+    start_urls = ['https://www.psych.ucsb.edu/people?people_type=6']
 
     def parse(self, response):
         # The main method of the spider. It scrapes the URL(s) specified in the
         # 'start_url' argument above. The content of the scraped URL is passed on
         # as the 'response' object.
 
-        for url in response.xpath("//*[@class='mppcell']/a/@href").extract()[:5]:
-            # This loops through all the URLs found inside an element of class 'mppcell'
+      for url in response.xpath("//tr[@class='rev--people--row']/td/h5/a/@href").extract()[:5]:
+            # This loops through all the URLs found inside an element of class 'rev--people--row'
 
             # Constructs an absolute URL by combining the response’s URL with a possible relative URL:
             full_url = response.urljoin(url)
             print("Found URL: "+full_url)
 
             # The following tells Scrapy to scrape the URL in the 'full_url' variable
-            # and calls the 'get_details() method below with the content of this
+            # and calls the 'biopage() method below with the content of this
             # URL:
-            yield scrapy.Request(full_url, callback=self.get_details)
+            yield scrapy.Request(full_url, callback=self.biopage)
 
-    def get_details(self, response):
-        # This method is called on by the 'parse' method above. It scrapes the URLs
-        # that have been extracted in the previous step.
+      def biogpage(self, response):
+      # This method is called on by the 'parse' method above. It scrapes the URLs
+      # that have been extracted in the previous step.
 
-        item = OntariomppsItem() # Creating a new Item object
+      # Store desired scraped data into variables:
+        name = response.xpath('//*[@id="block-psych-content"]/div/header/div/h1/text()').extract_first().strip()
+        title = response.xpath('//*[@id="block-psych-content"]/div/section[2]/h4/text()').extract_first().strip()
+        email = response.xpath('//*[@id="block-psych-content"]/div/section[2]/div[1]/i/a/text()').extract_first().strip()
+        print("Found details: " + name + ", " + title + ", " + email) #print for debugging
+
+        item = CarpwebscrapingItem() # Creating a new Item object
         # Store scraped data into that item:
-        item['name'] = response.xpath("normalize-space(//div[@class='mppdetails']/h1/text())").extract_first()
-        item['phone'] = response.xpath("normalize-space(//div[@class='phone']/text())").extract_first()
-        item['email'] = response.xpath("normalize-space(//div[@class='email']/a/text())").extract_first()
-
+        item['name'] = name
+        item['title'] = title
+        item['email'] = email
         # Return that item to the main spider method:
         yield item
 
@@ -1214,34 +1219,32 @@ class MppaddressesSpider(scrapy.Spider):
 {: .source}
 
 We made two significant changes to the file above:
-* We've included the line `from ontariompps.items import OntariomppsItem` at the top. This is required
-  so that our spider knows about the `OntariomppsItem` object we've just defined.
-* We've also replaced the `print` statements in `get_details()` with the creation of an `OntariomppsItem`
+* We've included the line `from carpwebscraping.items import CarpwebscrapingItem` at the top. This is required
+  so that our spider knows about the `CarpwebscrapingItem` object we've just defined.
+* We've also replaced the `print` statements in `biopage()` with the creation of an `CarpwebscrapingItem`
   object, in which fields we are now storing the scraped data. The item is then passed back to the
   main spider method using the `yield` statement.
 
 If we now run our spider again:
 
 ~~~
-scrapy crawl mppaddresses
+scrapy crawl psychfaculty
 ~~~
 {: .source}
 
 we see something like
 
 ~~~
-2017-02-27 21:53:52 [scrapy.utils.log] INFO: Scrapy 1.3.2 started (bot: ontariompps)
+2020-06-17 14:16:18 [scrapy.utils.log] INFO: Scrapy 2.1.0 started (bot: carpwebscraping)
 (...)
-2017-02-27 21:53:54 [scrapy.core.scraper] DEBUG: Scraped from <200 http://www.ontla.on.ca/web/members/members_detail.do?locale=en&ID=7085>
-{'email': 'lalbanese.mpp@liberal.ola.org',
- 'name': 'Hon Laura Albanese, MPP (York South—Weston)',
- 'phone': '416-325-6200'}
-2017-02-27 21:53:54 [scrapy.core.scraper] DEBUG: Scraped from <200 http://www.ontla.on.ca/web/members/members_detail.do?locale=en&ID=7183>
-{'email': 'tarmstrong-qp@ndp.on.ca',
- 'name': 'Teresa J. Armstrong, MPP (London—Fanshawe)',
- 'phone': '416-325-1872'}
+2020-06-17 14:16:19 [scrapy.core.engine] DEBUG: Crawled (200) <GET https://www.psych.ucsb.edu/people/faculty/nicole-alea-albada> (referer: https://www.psych.ucsb.edu/people?people_type=6)
+2020-06-17 14:16:19 [scrapy.core.engine] DEBUG: Crawled (200) <GET https://www.psych.ucsb.edu/people/faculty/heejung-kim> (referer: https://www.psych.ucsb.edu/people?people_type=6)
+2020-06-17 14:16:19 [scrapy.core.scraper] DEBUG: Scraped from <200 https://www.psych.ucsb.edu/people/faculty/nicole-alea-albada>
+{'email': 'nicole.albada@psych.ucsb.edu',
+ 'name': 'Nicole Alea Albada',
+ 'title': 'Assistant Teaching Professor'}
 (...)
-2017-02-27 21:53:54 [scrapy.core.engine] INFO: Spider closed (finished)
+2020-06-17 14:16:19 [scrapy.core.engine] INFO: Spider closed (finished)
 ~~~
 {: .output}
 
@@ -1252,7 +1255,7 @@ But let's now try running the spider with an extra `-o` ('o' for 'output') argum
 specifies the name of an output file with a `.csv` file extension:
 
 ~~~
-scrapy crawl mppaddresses -o output.csv
+scrapy crawl psychfaculty -o output.csv
 ~~~
 {: .source}
 
@@ -1270,12 +1273,14 @@ cat output.csv
 Returns
 
 ~~~
-email,name,phone
-bob.bailey@pc.ola.org,"Robert Bailey, MPP (Sarnia—Lambton)",416-325-1715
-ganderson.mpp.co@liberal.ola.org,"Granville Anderson, MPP (Durham)",416-325-5494
-ted.arnott@pc.ola.org,"Ted Arnott, MPP (Wellington—Halton Hills)",416-325-3880
-lalbanese.mpp@liberal.ola.org,"Hon Laura Albanese, MPP (York South—Weston)",416-325-6200
-tarmstrong-qp@ndp.on.ca,"Teresa J. Armstrong, MPP (London—Fanshawe)",416-325-1872
+email,name,title
+nicole.albada@psych.ucsb.edu,Nicole Alea Albada,Assistant Teaching Professor
+michael.goard@psych.ucsb.edu,Michael Goard,Assistant Professor
+emily.jacobs@psych.ucsb.edu,Emily Jacobs,Assistant Professor
+janusonis@ucsb.edu,Skirmantas Janusonis,Associate Professor
+jerry.jacobs@psych.ucsb.edu,Jerry Jacobs,"Research Professor, Distinguished Professor Emeritus"
+scott.grafton@psych.ucsb.edu,Scott Grafton,Distinguished Professor
+david.hamilton@psych.ucsb.edu,David Hamilton,Distinguished Professor Emeritus / Research Professor
 ~~~
 {: .output}
 
@@ -1287,45 +1292,51 @@ for a full list of supported formats.
 Now that everything looks to be in place, we can finally remove our limit to the number
 of scraped elements...
 
-(editing `ontariompps/ontariompps/spiders/mppaddresses.py`)
+(editing `carpwebscraping/carpwebscraping/spiders/psychfaculty.py`)
 
 ~~~
 import scrapy
-from ontariompps.items import OntariomppsItem # We need this so that Python knows about the item object
+from carpwebscraping.items import CarpwebscrapingItem # We need this so that Python knows about the item object
 
-class MppaddressesSpider(scrapy.Spider):
-    name = "mppaddresses" # The name of this spider
+class PsychfacultySpider(scrapy.Spider):
+    name = 'psychfaculty' # The name of this spider
 
     # The allowed domain and the URLs where the spider should start crawling:
-    allowed_domains = ["www.ontla.on.ca"]
-    start_urls = ['http://www.ontla.on.ca/web/members/members_current.do?locale=en/']
+    allowed_domains = ['www.psych.ucsb.edu']
+    start_urls = ['https://www.psych.ucsb.edu/people?people_type=6']
 
     def parse(self, response):
         # The main method of the spider. It scrapes the URL(s) specified in the
         # 'start_url' argument above. The content of the scraped URL is passed on
         # as the 'response' object.
-        for url in response.xpath("//*[@class='mppcell']/a/@href").extract():
-            # This loops through all the URLs found inside an element of class 'mppcell'
+
+      for url in response.xpath("//tr[@class='rev--people--row']/td/h5/a/@href").extract():
+            # This loops through all the URLs found inside an element of class 'rev--people--row'
 
             # Constructs an absolute URL by combining the response’s URL with a possible relative URL:
             full_url = response.urljoin(url)
             print("Found URL: "+full_url)
 
             # The following tells Scrapy to scrape the URL in the 'full_url' variable
-            # and calls the 'get_details() method below with the content of this
+            # and calls the 'biopage() method below with the content of this
             # URL:
-            yield scrapy.Request(full_url, callback=self.get_details)
+            yield scrapy.Request(full_url, callback=self.biopage)
 
-    def get_details(self, response):
+    def biogpage(self, response):
         # This method is called on by the 'parse' method above. It scrapes the URLs
         # that have been extracted in the previous step.
 
-        item = OntariomppsItem() # Creating a new Item object
-        # Store scraped data into that item:
-        item['name'] = response.xpath("normalize-space(//div[@class='mppdetails']/h1/text())").extract_first()
-        item['phone'] = response.xpath("normalize-space(//div[@class='phone']/text())").extract_first()
-        item['email'] = response.xpath("normalize-space(//div[@class='email']/a/text())").extract_first()
+        # Store desired scraped data into variables:
+        name = response.xpath('//*[@id="block-psych-content"]/div/header/div/h1/text()').extract_first().strip()
+        title = response.xpath('//*[@id="block-psych-content"]/div/section[2]/h4/text()').extract_first().strip()
+        email = response.xpath('//*[@id="block-psych-content"]/div/section[2]/div[1]/i/a/text()').extract_first().strip()
+        print("Found details: " + name + ", " + title + ", " + email) #print for debugging
 
+        item = CarpwebscrapingItem() # Creating a new Item object
+        # Store scraped data into that item:
+        item['name'] = name
+        item['title'] = title
+        item['email'] = email
         # Return that item to the main spider method:
         yield item
 ~~~
@@ -1336,13 +1347,13 @@ class MppaddressesSpider(scrapy.Spider):
 ... and run our spider one last time:
 
 ~~~
-scrapy crawl mppaddresses -o mppaddresses.csv
+scrapy crawl psychfaculty -o psychfaculty.csv
 ~~~
 {: .source}
 
 > ## Add other data elements to the spider
 >
-> Try modifying the spider code to add more data extracted from the MPP detail page.
+> Try modifying the spider code to add more data extracted from the faculty biopages.
 > Remember to edit the Item definition to allow for all extracted fields to be taken
 > care of.
 >
