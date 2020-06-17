@@ -637,7 +637,7 @@ we can use the `extract()` method. A variant of that method is `extract_first()`
 same thing as `extract()` but only returns the first element if there is more than one:
 
 ~~~
-response.xpath("//tr[@class='rev--people--row']/td/h5/a/@href").extract()
+response.xpath("//tr[@class='rev--people--row']/td/h5/a/@href").extract_first()
 ~~~
 {: .source}
 
