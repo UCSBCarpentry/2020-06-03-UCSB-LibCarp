@@ -785,10 +785,10 @@ https://www.psych.ucsb.edu/people/faculty/john-foley
 We can now pat ourselves on the back, as we have successfully completed the first stage
 of our project by successfully extracting all URLs leading to the minister profiles!
 
-> ## Limit the number of URL to scrape through while debugging
+> ## Limit the number of URLs to scrape through while debugging
 >
 > We've seen by testing the code above that we are able to successfully gather all URLs from
-> the list of MPPs. But while we're working through to the final code that will allow us
+> the list of faculty. But while we're working through to the final code that will allow us
 > the extract the data we want from those pages, it's probably a good idea to only run it
 > on a handful of pages at a time.
 >
