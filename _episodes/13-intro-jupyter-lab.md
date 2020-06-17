@@ -54,12 +54,32 @@ We will access JupyterLab through a cloud-based server called JupyterHub (our in
 ## Starting JupyterLab from JupyterHub
 ### Logging in to JupyterHub
 The website address for our JupyterHub is https://js-171-170.jetstream-cloud.org/. Please log in to JupyterHub using the username you choose from the previously shared Google sheet. The passwords for the accounts are also found on that google sheet.
-
-**NOTE** While it takes a bit to load, sometimes you will encounter a 500 internal error. Please click the "home page" link. This will give you a "start server" button. Click the start server button and your JupyterHub should load properly.
+You should see the following login page:
 
 <p align='center'>
-    <img alt="JupyterLab 500 Internal Server Error" src="../fig/JupyterHub500error.png" width="750"/>
+    <img alt="JupyterHub Login Page" src="../fig/Jupyterlab_login.PNG" width="750"/>
 </p>
+
+<p align='center'>
+    <img alt="JupyterHub Server Loading" src="../fig/JupyterHub_serverloading.PNG" width="750"/>
+</p>
+**NOTE** While it takes a bit to load, sometimes you will encounter a spawn failed error or 500 internal server error. If you encounter the spawn failed, refresh the page. It should then show a Page that shows 500 internal server error page. Please click the "home page" link on that page. This will give you a "start server" button. Click the start server button and your JupyterHub should load properly.
+
+Spawn failed error, restart page:
+<p align='center'>
+    <img alt="spawn failed" src="../fig/Jupyterlab_login.PNG" width="750"/>
+</p>
+
+Internal Server Error, click `home page`:
+<p align='center'>
+    <img alt="JupyterHub 500 Internal server error" src="../fig/JupyterHub_500InternalError.PNG" width="750"/>
+</p>
+
+Back to Homepage, click `start my server` button
+<p align='center'>
+    <img alt="JupyterHub Homepage" src="../fig/JupyterHub_homepage.PNG" width="750"/>
+</p>
+
 
 ## The JupyterLab Interface
 
@@ -69,6 +89,10 @@ is focused on providing flexible building blocks for interactive, exploratory co
 The [JupyterLab Interface](https://jupyterlab.readthedocs.io/en/stable/user/interface.html)
 consists of the Menu Bar, a collapsable Left Side Bar, and the Main Work Area which contains tabs
 of documents and activities.
+
+<p align='center'>
+    <img alt="JupyterLab Interface" src="../fig/JupyterLab_landingpage.PNG" width="750"/>
+</p>
 
 ### Menu Bar
 
