@@ -1022,31 +1022,31 @@ to extract the following details:
 > and returns an array of unicode strings (it is therefore not necessary to
 > use `extract()` on its results).
 >
-> Using the Scrapy shell, try writing a query that selects all phone numbers found on
-> a politician's detail page regardless of where they are located, using Regular Expressions.
+> Using the Scrapy shell, try writing a query that selects the room number found on
+> the faculty member's detail page regardless of where they are located, using Regular Expressions.
 >
 > You might find the [Regex 101](https://regex101.com/) interactive Regular Expressions
 > tester useful to get to the proper syntax.
 >
 > Tips:
 >
-> * We are looking for phone numbers following the North American syntax: ###-###-####
+> * We are looking for a string of the form: Room NNNN
 > * `re()` expects a regular expression string which should be prefixed by `r` as in `re(r'Name:\s*(.*)')`.
 > * Remember that `re()` is run on a `selector` object, so you can't do `response.re(r'...')`. Instead you may
 >   want to try doing something like `response.xpath('//body').re(r'...')`.
 >
 > > ## Solution
 > >
-> > This returns an array of phone (and fax) numbers (using the Scrapy shell):
+> > This returns the room number (using the Scrapy shell):
 > >
 > > ~~~
-> > scrapy shell "http://www.ontla.on.ca/web/members/members_detail.do?locale=en&ID=7085"
-> > In [1]: response.xpath('//body').re(r'\d{3}-\d{3}-\d{4}')
+> > scrapy shell https://www.psych.ucsb.edu/people/faculty/nicole-alea-albada
+> > In [1]: response.xpath('//body').re(r'Room (\d+)')
 > > ~~~
 > > {: .source}
 > >
 > > ~~~
-> > ['416-325-6200', '416-325-6195', '416-243-7984', '416-243-0327']
+> > ['3839']
 > > ~~~
 > > {: .output}
 > >
