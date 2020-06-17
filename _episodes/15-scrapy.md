@@ -552,7 +552,7 @@ queries from within Scrapy.
 This is achieved by calling the _Scrapy shell_ from the command line:
 
 ~~~
-scrapy shell https://www.psych.ucsb.edu/people?people_type=6
+scrapy shell 'https://www.psych.ucsb.edu/people?people_type=6'
 ~~~
 {: .source}
 
