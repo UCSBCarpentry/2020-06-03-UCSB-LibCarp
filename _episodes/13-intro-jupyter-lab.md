@@ -20,7 +20,6 @@ keypoints:
 - "The Notebook will turn Markdown into pretty-printed documentation."
 - "Markdown does most of what HTML does."
 ---
-FIXME: add starting terminal instance in JupyterLab
 FIXME: add navigating folders in jupyterlab terminal
 FIXME: add editing files in terminal (review of nano editor)?
 
@@ -123,7 +122,7 @@ and terminals, the command palette, and a list of open tabs in the main work are
 the default Left Side Bar is provided below.
 
 <p align='center'>
-    <img alt="JupyterLab Left Side Bar" src="../fig/0_jupyterlab_left_side_bar.png" width="250"/>
+    <img alt="JupyterLab Left Side Bar" src="../fig/JupyterLab default left sidebar.PNG" width="250"/>
 </p>
 
 The left sidebar can be collapsed or expanded by selecting “Show Left Sidebar” in the View menu or
