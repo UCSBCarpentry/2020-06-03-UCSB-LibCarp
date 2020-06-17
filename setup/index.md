@@ -3,8 +3,9 @@ layout: page
 title: Setup
 root: .
 ---
-
-[return to lesson](../)
+<a class="btn btn-primary" href="../">
+Return to Lesson
+</a>
 
 In order to follow this lesson, you will need to make sure the following software is installed on your computer.
 
@@ -33,7 +34,21 @@ instructions for *Python*](/2020-06-03-UCSBLibCarp/setup/setup.html) for
 >
 {: .prereq}
 
-### Scrapy
+## Scrapy
+
+
+> ## for June 17, 2020 Jupyter Lab
+> For our June 17th, 2020 Workshop we'll be using a Jupyter Hub/Jupyter Lab web based python development environment.   So you will NOT need to install Python locally.  You'll use python through your web browser for this workshop.
+>
+> Within Jupyter Lab you will need to install scrapy by entering `conda install -y scrapy` in the terminal.
+> Instructor will go over this process during the workshop.
+>
+> ![JupyterLab screenshot](../fig/jetstream-cloud-org-Screen-Shot.png)
+>
+>  The instructions below are for anyone doing this lesson outside of our live workshop.
+{: .keypoints}
+
+
 
 Once you have a working installation of Python, the next step is to install [Scrapy](https://scrapy.org/).
 
